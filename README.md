@@ -1,29 +1,19 @@
 # sleeper-web
 
-## Project setup
-```
-yarn install
-```
+> TODO: Write an actual readme file
 
-### Compiles and hot-reloads for development
-```
+## Getting Started
+
+```bash
+# Resolve dependencies
+yarn install
+
+# Run the Vue development server
 yarn serve
 ```
 
-### Compiles and minifies for production
-```
-yarn build
-```
+## License
 
-### Run your unit tests
-```
-yarn test:unit
-```
+Unlicensed. All rights reserved.
 
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Copyright &copy; 2020 - The Cozy team **& contributors**
