@@ -9,6 +9,7 @@
       </p>
       <a-button type="primary">Primary</a-button>
     </div>
+    <p>Test</p>
     <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
 </template>
