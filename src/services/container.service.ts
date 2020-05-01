@@ -1,14 +1,12 @@
-import Config from '@/interfaces/config';
 import axios, { AxiosInstance } from 'axios';
 
 export default class ContainerService {
-    config: Config = require("../api_config.json");
-    header = { Authorization: "Bearer " + this.config.authToken };
+    header = { Authorization: "Bearer " + process.env.VUE_APP_API_JWT_TOKEN };
     httpClient: AxiosInstance;
 
     constructor() {
         this.httpClient = axios.create({
-            baseURL: this.config.apiUrl,
+            baseURL: process.env.VUE_APP_API_URL,
             headers: this.header
         })
     }

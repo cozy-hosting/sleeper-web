@@ -13,22 +13,9 @@ yarn serve
 ```
 
 ## Config
-In the file structure you will find a api_config.json, which is looking like that:
 
-```bash
-{
-    # pass your apiUrl here e.g. http://localhost:5000
-    "apiUrl": "",
-    
-    # pass your generated authToken here
-    "authToken" : ""
-}
-
-```
-
-There is a config interface for this config, so you can get proper auto completion.
-
-An example usage is in the deployment service.
+The App can be configured via .env variables. Please refer to the [Vue Documentation](https://cli.vuejs.org/guide/mode-and-env.html#environment-variables) for which files to modify.
+The simplest way to get started is tho copy the .env.MODE to .env.MODE.local and modify the variables accordingly
 
 ## License
 

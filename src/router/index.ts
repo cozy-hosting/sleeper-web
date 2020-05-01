@@ -22,7 +22,7 @@ const routes: Array<RouteConfig> = [
   {
     path: "/deployment",
     name: "Deployment",
-    component: () => (import("../components/deployment/deployment.vue"))
+    component: () => (import("../components/deployment/Deployment.vue"))
   }
 ];
 
