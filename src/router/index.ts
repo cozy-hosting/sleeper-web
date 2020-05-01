@@ -1,7 +1,9 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
-import About from "../views/About.vue";
+import Deployments from "@/views/Deployments.vue";
+import Containers from "@/views/Containers.vue";
+import Images from "@/views/Images.vue";
 
 Vue.use(VueRouter);
 
@@ -9,17 +11,22 @@ const routes: Array<RouteConfig> = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: Home,
   },
   {
-    path: "/about",
-    name: "About",
-    component: About
+    path: "/deployments",
+    name: "Deployments",
+    component: Deployments,
   },
   {
-    path: "/deployment",
-    name: "Deployment",
-    component: () => (import("../components/deployment/Deployment.vue"))
+    path: "/containers",
+    name: "Containers",
+    component: Containers,
+  },
+  {
+    path: "/images",
+    name: "Images",
+    component: Images,
   }
 ];
 
