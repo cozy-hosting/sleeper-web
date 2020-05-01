@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
-import Deployments from "@/views/Deployments.vue";
+import Deployments from "@/components/deployment/Deployment.vue";
 import Containers from "@/views/Containers.vue";
 import Images from "@/views/Images.vue";
 
