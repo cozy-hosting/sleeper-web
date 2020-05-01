@@ -12,7 +12,7 @@ yarn install
 yarn serve
 ```
 
-# Config
+## Config
 In the file structure you will find a api_config.json, which is looking like that:
 
 ```bash
@@ -22,7 +22,6 @@ In the file structure you will find a api_config.json, which is looking like tha
     
     # pass your generated authToken here
     "authToken" : ""
-    
 }
 
 ```
