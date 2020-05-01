@@ -3,9 +3,7 @@
     <img src="./assets/logo.png" />
     <div>
       <p>
-        If Ant-Design-Vue is successfully added to this project, you'll see an
-        <code v-text="'<a-button>'"></code>
-        below
+        Test
       </p>
       <a-button type="primary">Primary</a-button>
     </div>
