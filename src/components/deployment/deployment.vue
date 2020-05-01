@@ -171,7 +171,7 @@
         <a-icon slot="dot" type="clock-circle-o" style="font-size: 16px;" v-if="deployState == 4"/>
         Start your Container</a-timeline-item>
     <a-timeline-item>
-        <a-icon slot="dot" type="clock-circle-o" style="font-size: 16px;" v-if="deployState == 5"/>
+        <a-icon slot="dot" type="check-circle" style="font-size: 16px;" v-if="deployState == 5"/>
         Finished!</a-timeline-item>
   </a-timeline>
 
@@ -267,6 +267,7 @@ export default class Deployment extends Vue {
         const contStart = await this.containerService.start(cont.data.data);
         this.deployState = DeployState.READY;
         this.getAllDeployments(0, this.allDeployments.length+1);
+        this.form = { name: "", description: "", image: "", mounts: [ "" ], ports: [""], environment: [{ k: "", val: ""}], labels: [{ k: "", val: ""}], links: [{ k: "", val: ""}] };
         }
         catch(e)
         {
