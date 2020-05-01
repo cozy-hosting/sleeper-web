@@ -1,37 +1,56 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png" />
-    <div>
-      <p>
-        If Ant-Design-Vue is successfully added to this project, you'll see an
-        <code v-text="'<a-button>'"></code>
-        below
-      </p>
-      <a-button type="primary">Primary</a-button>
-    </div>
-    <p>Test</p>
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+    <a-layout style="position: relative; height: 100%">
+        <a-layout-header class="header">
+            <router-link to="/"><div class="logo">Cozy</div></router-link>
+            <a-menu theme="dark" mode="horizontal" @select="onMenuItemSelected"
+                    :selectedKeys="selectedKeys"
+                    :style="{ lineHeight: '64px' }">
+                <a-menu-item key="/deployments">Deployments</a-menu-item>
+                <a-menu-item key="/containers">Containers</a-menu-item>
+                <a-menu-item key="/images">Images</a-menu-item>
+            </a-menu>
+        </a-layout-header>
+        <a-layout>
+            <a-layout-sider width="200" style="background: #fff">
+                <a-menu mode="inline" :selectedKeys="selectedKeys" :style="{ height: '100%', borderRight: 0 }"
+                        @select="onMenuItemSelected">
+                    <a-menu-item key="/deployments">Deployments</a-menu-item>
+                    <a-menu-item key="/containers">Containers</a-menu-item>
+                    <a-menu-item key="/images">Images</a-menu-item>
+                </a-menu>
+            </a-layout-sider>
+            <a-layout style="padding: 0 24px 24px">
+                <router-view></router-view>
+            </a-layout>
+        </a-layout>
+    </a-layout>
 </template>
 
-<script>
-import HelloWorld from "./components/HelloWorld.vue";
+<script lang="ts">
+    import Vue from 'vue'
+    import Component from "vue-class-component";
 
-export default {
-  name: "app",
-  components: {
-    HelloWorld
-  }
-};
+    @Component({})
+    export default class App extends Vue {
+
+        private currentPage: string[] = [];
+
+        onMenuItemSelected(e: any) {
+            this.$router.push(e.key);
+        }
+
+        get selectedKeys() {
+            return [this.$route.path];
+        }
+    };
 </script>
 
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss">
+    .logo {
+        width: 120px;
+        font-size: 36px;
+        color: white;
+        float: left;
+        line-height: 1.55;
+    }
 </style>
