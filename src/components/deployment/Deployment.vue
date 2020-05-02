@@ -267,13 +267,13 @@ export default class Deployment extends Vue {
         {
         this.deployState = DeployState.CREATE;
         const deploy = await this.deployService.createDeployment(this.form);
-        console.log(deploy.data.data);
+
         this.deployState = DeployState.PULL;
         const pull = await this.imageService.pull(deploy.data.data);
-        console.log(pull.data.data);
+
         this.deployState = DeployState.CCONTAINER;
         const cont = await this.containerService.create(deploy.data.data);
-        console.log(cont.data.data);
+
         this.deployState = DeployState.RCONTAINER;
         const contStart = await this.containerService.start(cont.data.data);
         this.deployState = DeployState.READY;
