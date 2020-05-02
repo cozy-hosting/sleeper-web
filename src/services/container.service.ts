@@ -11,6 +11,12 @@ export default class ContainerService {
         })
     }
 
+    async getAll(skip: number, take: number)
+    {
+        const url = "/Container?skip=" + skip + "&take=" + take;
+        return await this.httpClient.get(url);
+    }
+
     async create(depID: string)
     {
         const url = "/Container";
@@ -21,5 +27,11 @@ export default class ContainerService {
     {
         const url = "/Container/" + contID + "/start";
         return await this.httpClient.post(url);
+    }
+
+    async delete(contID: string)
+    {
+        const url = "/Container/" + contID;
+        return await this.httpClient.delete(url);
     }
 }
