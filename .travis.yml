@@ -1,0 +1,40 @@
+language: minimal
+dist: bionic
+services:
+  - docker
+
+branches:
+  only:
+    - master
+    - staging
+    # Trigger a build if changes
+    # are made to the pipeline itself
+    - travis-ci
+
+jobs:
+  include:
+    # Build sleeper-web docker image
+    # everytime a build gets triggered
+    - stage: build
+      name: "Build Docker image for sleeper-web"
+      script:
+        - docker build -t "sleeper-web:build" .
+    - stage: push-staging
+      name: "Push Docker image for sleeper-web staging"
+      script:
+        - echo "$REPO_PASSWORD" | docker login -u "$REPO_USERNAME" --password-stdin "$REPO_URL"
+        - docker build -t "$REPO_URL/$REPO_USERNAME/sleeper-web:staging" .
+        - docker push "$REPO_URL/$REPO_USERNAME/sleeper-web:staging"
+    - stage: push-release
+      name: "Push Docker image for sleeper-web release"
+      script:
+        - echo "$REPO_PASSWORD" | docker login -u "$REPO_USERNAME" --password-stdin "$REPO_URL"
+        - docker build -t "$REPO_URL/$REPO_USERNAME/sleeper-web:latest" .
+        - docker push "$REPO_URL/$REPO_USERNAME/sleeper-web:latest"
+
+stages:
+  - build
+  - name: push-staging
+    if: type = push AND branch = staging
+  - name: push-release
+    if: type = push AND branch = master
