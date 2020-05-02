@@ -23,6 +23,9 @@
                 <router-view></router-view>
             </a-layout>
         </a-layout>
+        <a-layout-footer style="text-align: center">
+            Cozy ©2020
+        </a-layout-footer>
     </a-layout>
 </template>
 
