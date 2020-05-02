@@ -38,3 +38,6 @@ stages:
     if: type = push AND branch = staging
   - name: push-release
     if: type = push AND branch = master
+
+notifications:
+  slack: cozy-hosting:8zQ0xIYugXVNENCOti7ODHNx
