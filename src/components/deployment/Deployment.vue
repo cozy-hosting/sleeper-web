@@ -11,11 +11,11 @@
         
         <a-row :gutter="6">
     <a-col :span="2">
-        <label>Deployments to Skip</label>
+        <label><b>#</b> to Skip:</label>
         <a-input-number placeholder="Skip" v-on:change="getAllDeployments(skip, take)" v-model="skip"></a-input-number>
     </a-col>
     <a-col :span="2">
-            <label>Deployments to Take</label>
+            <label><b>#</b> to Take:</label>
             <a-input-number placeholder="Take" value="20" v-on:change="getAllDeployments(skip, take)" v-model="take"></a-input-number>
     </a-col>
     </a-row>
@@ -171,16 +171,20 @@
         <a-icon slot="dot" type="clock-circle-o" style="font-size: 16px;" v-if="deployState == 4"/>
         Start your Container</a-timeline-item>
     <a-timeline-item>
-        <a-icon slot="dot" type="check-circle" style="font-size: 16px;" v-if="deployState == 5"/>
+        <a-icon slot="dot" type="check-circle-o" style="font-size: 16px;" v-if="deployState == 5"/>
         Finished!</a-timeline-item>
   </a-timeline>
 
 
-    <a-modal v-model="editMode" title="Basic Modal" @ok="handleOk">
+    <a-modal v-model="editMode" title="Edit your Deployment" @ok="handleOk">
       <a-textarea v-model="toEditJSON" auto-size>
           {{toEditJSON}}
       </a-textarea>
         </a-modal>
+
+    <a-modal v-model="deleteMode" title="Delete your deployment" @ok="handleDelete">
+        <a-checkbox v-model="deleteContainer">Delete connected Container?</a-checkbox>
+    </a-modal>
 
     </div>
 </template>
@@ -212,6 +216,8 @@ export default class Deployment extends Vue {
     containerService : ContainerService = new ContainerService();
     visible = false;
     editMode = false;
+    deleteMode = false;
+    deleteContainer = false;
     form: DeploymentInterface = { name: "", description: "", image: "", mounts: [ "" ], ports: [""], environment: [{ k: "", val: ""}], labels: [{ k: "", val: ""}], links: [{ k: "", val: ""}] };
     alertMessage: string[]= [];
     deployState : DeployState = DeployState.NOTHING;
@@ -219,6 +225,8 @@ export default class Deployment extends Vue {
     skip = 0;
     take = 20;
     toEditJSON = "";
+
+    selectedItem: any;
     
     constructor()
     {
@@ -259,10 +267,13 @@ export default class Deployment extends Vue {
         {
         this.deployState = DeployState.CREATE;
         const deploy = await this.deployService.createDeployment(this.form);
+
         this.deployState = DeployState.PULL;
         const pull = await this.imageService.pull(deploy.data.data);
+
         this.deployState = DeployState.CCONTAINER;
         const cont = await this.containerService.create(deploy.data.data);
+
         this.deployState = DeployState.RCONTAINER;
         const contStart = await this.containerService.start(cont.data.data);
         this.deployState = DeployState.READY;
@@ -272,18 +283,30 @@ export default class Deployment extends Vue {
         catch(e)
         {
             this.alertMessage.push(e);
-            this.deployState = DeployState.NOTHING;
+           // this.deployState = DeployState.NOTHING;
         }
     }
 
     parseForm()
     {
+        for(let i=0; i<this.form.mounts.length; i++)
+        {
+            if(this.form.mounts[i] == "")
+            {
+                this.form.mounts.splice(i, 1);
+            }
+        }
+
         const realEnv: any = {};
         for(let i =0; i<this.form.environment.length; i++)
         {
             const k = this.form.environment[i].k;
-            if(!k)
+            if(k == "" || this.form.environment[i].val == "")
+            {
+                this.form.environment.splice(i, 1);
                 continue;
+            }
+
             realEnv[k]=this.form.environment[i].val;
             
         }
@@ -293,8 +316,11 @@ export default class Deployment extends Vue {
         for(let i =0; i<this.form.links.length; i++)
         {
             const k = this.form.links[i].k;
-            if(!k)
+            if(k == "" || this.form.links[i].val == "")
+            {
+                this.form.links.splice(i, 1);
                 continue;
+            }
             realLink[k]=this.form.links[i].val;
             
         }
@@ -304,8 +330,11 @@ export default class Deployment extends Vue {
         for(let i =0; i<this.form.labels.length; i++)
         {
             const k = this.form.labels[i].k;
-            if(!k)
+            if(k == "" || this.form.labels[i].val == "")
+            {
+                this.form.labels.splice(i, 1);
                 continue;
+            }
             realLabel[k]=this.form.labels[i].val;
             
         }
@@ -384,10 +413,10 @@ export default class Deployment extends Vue {
 
     async del(item: any)
     {
-        const del = this.deployService.deleteById(item.id);
-        this.getAllDeployments(this.skip, this.take);
-
+        this.selectedItem = item;
+        this.deleteMode = true;
     }
+
     async edit(item: any)
     {
         this.editMode = true;
@@ -400,6 +429,24 @@ export default class Deployment extends Vue {
         const edit = await this.deployService.updateById(json.id, json);
         this.editMode = false;
         this.getAllDeployments(this.skip, this.take);
+    }
+
+    async handleDelete()
+    {
+        if(this.deleteContainer)
+        {
+            const all : any[]= (await this.containerService.getAll(0, 50)).data.data;
+            const el = all.find((x: any)=>x.deployment == this.selectedItem.id);
+            await this.containerService.delete(el.id);
+
+        }
+
+        await this.deployService.deleteById(this.selectedItem.id);
+        this.getAllDeployments(this.skip, this.take);
+
+        this.selectedItem = null;
+        this.deleteContainer = false;
+        this.deleteMode = false;
     }
 
 }
