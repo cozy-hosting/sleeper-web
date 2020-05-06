@@ -290,11 +290,25 @@ export default class Deployment extends Vue {
 
     parseForm()
     {
-        this.form.mounts.filter(obj => obj !== "");
-        if(this.form.mounts[0] == "") this.form.mounts = [];
+        for(let i =0; i<this.form.mounts.length; i++)
+        {
+            if(this.form.mounts[i].length === 0)
+            {
+                this.form.mounts.splice(i, 1);
+                i = 0;
+            }
+        }
+            console.log(this.form.mounts);
+        if(this.form.mounts[0].length === 0) this.form.mounts = [];
+        for(let i =0; i<this.form.ports.length; i++)
+        {
+            if(this.form.ports[i].length === 0)
+            {
+                this.form.ports.splice(i, 1);
+                i = 0;
+            }
+        }
 
-        this.form.ports.filter(obj => obj !== "");
-        if(this.form.ports[0] == "") this.form.ports = [];
 
         const realEnv: any = {};
         for(let i =0; i<this.form.environment.length; i++)
