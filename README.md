@@ -12,6 +12,11 @@ yarn install
 yarn serve
 ```
 
+## Config
+
+The App can be configured via .env variables. Please refer to the [Vue Documentation](https://cli.vuejs.org/guide/mode-and-env.html#environment-variables) for which files to modify.
+The simplest way to get started is to copy the file .env.[mode] to .env.[mode].local and modify the variables accordingly
+
 ## License
 
 Unlicensed. All rights reserved.
