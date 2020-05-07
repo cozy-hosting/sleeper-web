@@ -260,9 +260,10 @@ export default class Deployment extends Vue {
     {
         this.deployState = DeployState.NOTHING;
         this.visible = false;
+        this.parseForm();
         if(!this.validate())
             return;
-        this.parseForm();
+
         try
         {
         this.deployState = DeployState.CREATE;
@@ -278,7 +279,7 @@ export default class Deployment extends Vue {
         const contStart = await this.containerService.start(cont.data.data);
         this.deployState = DeployState.READY;
         this.getAllDeployments(0, this.allDeployments.length+1);
-        this.form = { name: "", description: "", image: "", mounts: [ "" ], ports: [""], environment: [{ k: "", val: ""}], labels: [{ k: "", val: ""}], links: [{ k: "", val: ""}] };
+        this.form = { name: "", description: "", image: "", mounts: [""], ports: [""], environment: [{ k: "", val: ""}], labels: [{ k: "", val: ""}], links: [{ k: "", val: ""}] };
         }
         catch(e)
         {
@@ -289,13 +290,25 @@ export default class Deployment extends Vue {
 
     parseForm()
     {
-        for(let i=0; i<this.form.mounts.length; i++)
+        for(let i =0; i<this.form.mounts.length; i++)
         {
-            if(this.form.mounts[i] == "")
+            if(this.form.mounts[i].length === 0)
             {
                 this.form.mounts.splice(i, 1);
+                i = 0;
             }
         }
+            console.log(this.form.mounts);
+        if(this.form.mounts[0].length === 0) this.form.mounts = [];
+        for(let i =0; i<this.form.ports.length; i++)
+        {
+            if(this.form.ports[i].length === 0)
+            {
+                this.form.ports.splice(i, 1);
+                i = 0;
+            }
+        }
+
 
         const realEnv: any = {};
         for(let i =0; i<this.form.environment.length; i++)
@@ -304,6 +317,7 @@ export default class Deployment extends Vue {
             if(k == "" || this.form.environment[i].val == "")
             {
                 this.form.environment.splice(i, 1);
+                i = 0;
                 continue;
             }
 
@@ -319,6 +333,7 @@ export default class Deployment extends Vue {
             if(k == "" || this.form.links[i].val == "")
             {
                 this.form.links.splice(i, 1);
+                i = 0;
                 continue;
             }
             realLink[k]=this.form.links[i].val;
@@ -333,6 +348,7 @@ export default class Deployment extends Vue {
             if(k == "" || this.form.labels[i].val == "")
             {
                 this.form.labels.splice(i, 1);
+                i = 0;
                 continue;
             }
             realLabel[k]=this.form.labels[i].val;
@@ -357,7 +373,7 @@ export default class Deployment extends Vue {
         {
             this.alertMessage.push("You haven't provided an image for the deployment.");
         }
-        if(!this.form.ports)
+        if(this.form.ports.length == 0)
         {
             this.alertMessage.push("You haven't provided any ports for the deployment.");
         }
