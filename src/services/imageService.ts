@@ -1,27 +1,31 @@
-import apiClient from './ApiConfig'
+import ApiConfig from "./ApiConfig";
 
 interface Image {
-    deployment: string
+  deployment: string;
 }
 
-export default {
-    getAll(skip: number, take: number) {
-        return apiClient.get(
-            '/image',
-            { params: { skip, take } }
-        )
-    },
-    getById(id: number) {
-        return apiClient.get(
-            '/image',
-            { params: { id } }
-        )
-    },
-    post(image: Image, username: string, password: string) {
-        return apiClient.post(
-            '/create',
-            { image },
-            { headers: { username, password } }
-        )
-    },
+class ImageService {
+  getAll(skip: number, take: number) {
+    return ApiConfig.get(`image?skip=${skip}&take=${take}`);
+  }
+
+  getById(id: number) {
+    return ApiConfig.get(`image/${id}`);
+  }
+
+  create(image: Image, username?: string, password?: string) {
+    return username && password
+      ? ApiConfig.post("image", image, { headers: { username, password } })
+      : ApiConfig.post("image", image);
+  }
+
+  update(id: number) {
+    return ApiConfig.put(`image/${id}`);
+  }
+
+  delete(id: number) {
+    return ApiConfig.delete(`image/${id}`);
+  }
 }
+
+export default new ImageService();
