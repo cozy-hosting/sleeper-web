@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import Home from "../views/Home.vue";
-import Deployments from "@/components/deployment/Deployment.vue";
+import Home from "@/views/Home.vue";
+import Deployments from "@/views/Deployments.vue";
 import Containers from "@/views/Containers.vue";
 import Images from "@/views/Images.vue";
 
@@ -27,13 +27,13 @@ const routes: Array<RouteConfig> = [
     path: "/images",
     name: "Images",
     component: Images,
-  }
+  },
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes
+  routes,
 });
 
 export default router;
