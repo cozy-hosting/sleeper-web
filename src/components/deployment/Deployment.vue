@@ -261,6 +261,7 @@ export default class Deployment extends Vue {
         this.deployState = DeployState.NOTHING;
         this.visible = false;
         this.parseForm();
+        console.log("PARSED");
         if(!this.validate())
             return;
 
@@ -290,6 +291,7 @@ export default class Deployment extends Vue {
 
     parseForm()
     {
+
         for(let i =0; i<this.form.mounts.length; i++)
         {
             if(this.form.mounts[i].length === 0)
@@ -298,8 +300,11 @@ export default class Deployment extends Vue {
                 i = 0;
             }
         }
-            console.log(this.form.mounts);
+        if(this.form.mounts.length == 1)
+        {
         if(this.form.mounts[0].length === 0) this.form.mounts = [];
+        }
+
         for(let i =0; i<this.form.ports.length; i++)
         {
             if(this.form.ports[i].length === 0)
@@ -307,6 +312,11 @@ export default class Deployment extends Vue {
                 this.form.ports.splice(i, 1);
                 i = 0;
             }
+        }
+
+        if(this.form.ports.length == 1)
+        {
+        if(this.form.ports[0].length === 0) this.form.ports = [];
         }
 
 
