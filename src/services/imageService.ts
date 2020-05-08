@@ -1,4 +1,4 @@
-import ApiConfig from "./ApiConfig";
+import ApiClient from "./apiConfig";
 
 export interface ImageInterface {
   deployment: string;
@@ -6,25 +6,25 @@ export interface ImageInterface {
 
 class ImageService {
   public getAll(skip: number, take: number) {
-    return ApiConfig.get(`image?skip=${skip}&take=${take}`);
+    return ApiClient.get(`image?skip=${skip}&take=${take}`);
   }
 
   public getById(id: number) {
-    return ApiConfig.get(`image/${id}`);
+    return ApiClient.get(`image/${id}`);
   }
 
   public create(image: ImageInterface, username?: string, password?: string) {
     return username && password
-      ? ApiConfig.post("image", image, { headers: { username, password } })
-      : ApiConfig.post("image", image);
+      ? ApiClient.post("image", image, { headers: { username, password } })
+      : ApiClient.post("image", image);
   }
 
   public update(id: number) {
-    return ApiConfig.put(`image/${id}`);
+    return ApiClient.put(`image/${id}`);
   }
 
   public delete(id: number) {
-    return ApiConfig.delete(`image/${id}`);
+    return ApiClient.delete(`image/${id}`);
   }
 }
 

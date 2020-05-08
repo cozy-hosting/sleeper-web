@@ -1,4 +1,4 @@
-import ApiClient from "./ApiConfig";
+import ApiClient from "./apiConfig";
 
 export interface TokenInterface {
   name: string;
