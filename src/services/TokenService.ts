@@ -6,7 +6,7 @@ interface TokenInterface {
 }
 
 class TokenService {
-  create(token: TokenInterface) {
+  public create(token: TokenInterface) {
     return ApiClient.post("token", token);
   }
 }

@@ -11,27 +11,27 @@ interface NetworkConnectInterface {
 }
 
 class NetworkService {
-  getAll(skip: number, take: number) {
+  public getAll(skip: number, take: number) {
     return ApiClient.get(`network?skip=${skip}&take=${take}`);
   }
 
-  getById(id: number) {
+  public getById(id: number) {
     return ApiClient.get(`network/${id}`);
   }
 
-  create(network: NetworkCreateInterface) {
+  public create(network: NetworkCreateInterface) {
     return ApiClient.post("network", network);
   }
 
-  connect(id: number, network: NetworkConnectInterface) {
+  public connect(id: number, network: NetworkConnectInterface) {
     return ApiClient.post(`network/${id}/connect`, network);
   }
 
-  disconnect(id: number, network: NetworkConnectInterface) {
+  public disconnect(id: number, network: NetworkConnectInterface) {
     return ApiClient.post(`network/${id}/disconnect`, network);
   }
 
-  delete(id: number) {
+  public delete(id: number) {
     return ApiClient.delete(`network/${id}`);
   }
 }

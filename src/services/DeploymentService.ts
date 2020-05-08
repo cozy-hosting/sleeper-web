@@ -15,23 +15,23 @@ export interface DeploymentInterface {
 }
 
 class DeploymentService {
-  getAll(skip: number, take: number) {
+  public getAll(skip: number, take: number) {
     return ApiClient.get(`deployment?skip=${skip}&take=${take}`);
   }
 
-  getById(id: number) {
+  public getById(id: number) {
     return ApiClient.get(`deployment/${id}`);
   }
 
-  create(deployment: DeploymentInterface) {
+  public create(deployment: DeploymentInterface) {
     return ApiClient.post("deployment", deployment);
   }
 
-  update(id: number, deployment: DeploymentInterface) {
+  public update(id: number, deployment: DeploymentInterface) {
     return ApiClient.put(`deployment/${id}`, deployment);
   }
 
-  delete(id: number) {
+  public delete(id: number) {
     return ApiClient.delete(`deployment/${id}`);
   }
 }
