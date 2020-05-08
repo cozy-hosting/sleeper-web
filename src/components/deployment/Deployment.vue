@@ -345,7 +345,9 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import DeploymentService, { DeploymentI } from "@/services/DeploymentService";
+import DeploymentService, {
+  DeploymentInterface
+} from "@/services/DeploymentService";
 import ImageService from "@/services/ImageService";
 import ContainerService from "@/services/ContainerService";
 
@@ -366,7 +368,7 @@ export default class Deployment extends Vue {
   editMode = false;
   deleteMode = false;
   deleteContainer = false;
-  form: DeploymentI = {
+  form: DeploymentInterface = {
     name: "",
     description: "",
     image: "",
