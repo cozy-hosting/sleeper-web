@@ -10,6 +10,9 @@ WORKDIR /project
 COPY . .
 RUN yarn install
 
+# Run unit tests
+RUN yarn test:unit
+
 # Build project into /project/build
 RUN yarn build
 
