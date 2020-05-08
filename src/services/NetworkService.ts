@@ -1,12 +1,12 @@
 import ApiClient from "./ApiConfig";
 
-interface NetworkCreate {
+interface NetworkCreateInterface {
   name: string;
   description: string;
   subnet: string;
 }
 
-interface NetworkConnect {
+interface NetworkConnectInterface {
   container: string;
 }
 
@@ -19,15 +19,15 @@ class NetworkService {
     return ApiClient.get(`network/${id}`);
   }
 
-  create(network: NetworkCreate) {
+  create(network: NetworkCreateInterface) {
     return ApiClient.post("network", network);
   }
 
-  connect(id: number, network: NetworkConnect) {
+  connect(id: number, network: NetworkConnectInterface) {
     return ApiClient.post(`network/${id}/connect`, network);
   }
 
-  disconnect(id: number, network: NetworkConnect) {
+  disconnect(id: number, network: NetworkConnectInterface) {
     return ApiClient.post(`network/${id}/disconnect`, network);
   }
 

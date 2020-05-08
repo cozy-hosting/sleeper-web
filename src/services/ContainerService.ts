@@ -1,6 +1,6 @@
 import ApiClient from "./ApiConfig";
 
-interface Container {
+export interface ContainerInterface {
   deployment: string;
 }
 
@@ -13,7 +13,7 @@ class ContainerService {
     return ApiClient.get(`container/${id}`);
   }
 
-  create(container: Container) {
+  create(container: ContainerInterface) {
     return ApiClient.post("container", container);
   }
 

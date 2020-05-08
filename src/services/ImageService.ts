@@ -1,6 +1,6 @@
 import ApiConfig from "./ApiConfig";
 
-interface Image {
+interface ImageInterface {
   deployment: string;
 }
 
@@ -13,7 +13,7 @@ class ImageService {
     return ApiConfig.get(`image/${id}`);
   }
 
-  create(image: Image, username?: string, password?: string) {
+  create(image: ImageInterface, username?: string, password?: string) {
     return username && password
       ? ApiConfig.post("image", image, { headers: { username, password } })
       : ApiConfig.post("image", image);

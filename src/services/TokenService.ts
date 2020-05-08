@@ -1,12 +1,12 @@
 import ApiClient from "./ApiConfig";
 
-interface Token {
+interface TokenInterface {
   name: string;
   description: string;
 }
 
 class TokenService {
-  create(token: Token) {
+  create(token: TokenInterface) {
     return ApiClient.post("token", token);
   }
 }

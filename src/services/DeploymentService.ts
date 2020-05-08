@@ -1,12 +1,12 @@
 import ApiClient from "./ApiConfig";
 
-interface Deployment {
+export interface DeploymentInterface {
   name: string;
   description: string;
   image: string;
   ports: string[];
   mounts: string[];
-  enviroment: {
+  environment: {
     [key: string]: string;
   };
   labels: {
@@ -16,18 +16,18 @@ interface Deployment {
 
 class DeploymentService {
   getAll(skip: number, take: number) {
-    return ApiClient.get(`deplyoment?skip=${skip}&take=${take}`);
+    return ApiClient.get(`deployment?skip=${skip}&take=${take}`);
   }
 
   getById(id: number) {
     return ApiClient.get(`deployment/${id}`);
   }
 
-  create(deployment: Deployment) {
+  create(deployment: DeploymentInterface) {
     return ApiClient.post("deployment", deployment);
   }
 
-  update(id: number, deployment: Deployment) {
+  update(id: number, deployment: DeploymentInterface) {
     return ApiClient.put(`deployment/${id}`, deployment);
   }
 
