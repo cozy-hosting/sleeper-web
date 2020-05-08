@@ -1,11 +1,15 @@
 <template>
   <div>
-    <h1>Deployments</h1>
+    <deployment></deployment>
   </div>
 </template>
 
 <script lang="ts">
-export default {};
+import Deployment from "@/components/deployment/Deployment.vue";
+
+export default {
+  components: { Deployment }
+};
 </script>
 
 <style lang="scss"></style>
