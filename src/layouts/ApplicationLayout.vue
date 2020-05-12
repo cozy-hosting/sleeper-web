@@ -14,7 +14,13 @@
         <a-menu-item key="/deployments">Deployments</a-menu-item>
         <a-menu-item key="/containers">Containers</a-menu-item>
         <a-menu-item key="/images">Images</a-menu-item>
+        <a-menu-item key="/login" type="primary" id="logout-btn"
+          ><a-button type="primary" @click="logout"
+            >Logout</a-button
+          ></a-menu-item
+        >
       </a-menu>
+
     </a-layout-header>
     <a-layout>
       <a-layout-sider width="200" style="background: #fff">
@@ -42,6 +48,10 @@ export default class App extends Vue {
     this.$router.push(e.key);
   }
 
+  logout() {
+    localStorage.clear();
+  }
+
   get selectedKeys() {
     return [this.$route.path];
   }
@@ -55,5 +65,8 @@ export default class App extends Vue {
   color: white;
   float: left;
   line-height: 1.55;
+}
+#logout-btn {
+  float: right;
 }
 </style>
