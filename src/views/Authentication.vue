@@ -38,22 +38,22 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
-import AuthenticationService from "@/services/AuthenticationService";
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import AuthenticationService from '@/services/AuthenticationService';
 
 @Component({})
 export default class Authentication extends Vue {
   form: any = {
-    authToken: "",
+    authToken: '',
     rememberMe: false
   };
   rules: any = {
     authToken: [
-      { required: true, message: "Please provide a token", trigger: "change" }
+      { required: true, message: 'Please provide a token', trigger: 'change' }
     ]
   };
-  errorMessage = "";
+  errorMessage = '';
   authenticationService = new AuthenticationService();
   handleSubmit(e: Event) {
     e.preventDefault();
@@ -62,14 +62,14 @@ export default class Authentication extends Vue {
       .getNewToken()
       .then(response => {
         this.authenticationService.setToken(response.data.data);
-        this.$router.push("home");
+        this.$router.push('home');
       })
       .catch(error => {
         if (error.response.status == 401) {
-          this.errorMessage = "The token is not valid";
+          this.errorMessage = 'The token is not valid';
         }
         if (error.response.status == 500) {
-          this.errorMessage = "Backend failure";
+          this.errorMessage = 'Backend failure';
         }
       });
   }
