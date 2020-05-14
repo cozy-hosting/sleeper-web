@@ -1,367 +1,319 @@
 <template>
-  <div>
-    <portal to="sidebar"></portal>
-    <a-breadcrumb style="margin: 16px 0">
-      <a-breadcrumb-item
-        ><router-link to="/">Home</router-link></a-breadcrumb-item
-      >
-      <a-breadcrumb-item>Deployments</a-breadcrumb-item>
-    </a-breadcrumb>
-    <a-layout-content
-      :style="{ background: '#fff', padding: '24px', margin: 0 }"
+  <div class="deployment">
+    <a-alert
+      v-if="alertMessage.length > 0"
+      message="Error"
+      type="error"
+      closable
+      @close="onCloseAlert"
+      ><div slot="description" v-for="alert in alertMessage" :key="alert">
+        {{ alert }}
+      </div></a-alert
     >
-      <a-alert
-        v-if="alertMessage.length > 0"
-        message="Error"
-        type="error"
-        closable
-        @close="onCloseAlert"
-        ><div slot="description" v-for="alert in alertMessage" :key="alert">
-          {{ alert }}
-        </div></a-alert
-      >
 
-      <a-card class="depContainer" title="All Deployments">
-        <a-row :gutter="6">
-          <a-col :span="2">
-            <label><b>#</b> to Skip:</label>
-            <a-input-number
-              placeholder="Skip"
-              v-on:change="getAllDeployments(skip, take)"
-              v-model="skip"
-            ></a-input-number>
-          </a-col>
-          <a-col :span="2">
-            <label><b>#</b> to Take:</label>
-            <a-input-number
-              placeholder="Take"
-              value="20"
-              v-on:change="getAllDeployments(skip, take)"
-              v-model="take"
-            ></a-input-number>
-          </a-col>
-        </a-row>
-        <a-row>
-          <a-col :span="24">
+    <a-card class="depContainer" title="All Deployments">
+      <a-row :gutter="6">
+        <a-col :span="2">
+          <label><b>#</b> to Skip:</label>
+          <a-input-number
+            placeholder="Skip"
+            v-on:change="getAllDeployments(skip, take)"
+            v-model="skip"
+          ></a-input-number>
+        </a-col>
+        <a-col :span="2">
+          <label><b>#</b> to Take:</label>
+          <a-input-number
+            placeholder="Take"
+            value="20"
+            v-on:change="getAllDeployments(skip, take)"
+            v-model="take"
+          ></a-input-number>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-divider></a-divider>
+          <a-list
+            v-if="allDeployments.length > 0"
+            size="small"
+            item-layout="horizontal"
+            :data-source="allDeployments"
+          >
+            <a-list-item slot="renderItem" slot-scope="item, index">
+              <a-avatar>{{ index }}</a-avatar>
+              <a slot="actions" v-on:click="edit(item)">edit</a>
+              <a slot="actions" v-on:click="del(item)">delete</a>
+              <a-list-item-meta
+                ><div slot="description">
+                  {{ item.description }}
+                </div></a-list-item-meta
+              >
+              <div>{{ item.name }} on Port {{ item.ports[0] }}</div>
+            </a-list-item>
             <a-divider></a-divider>
-            <a-list
-              v-if="allDeployments.length > 0"
-              size="small"
-              item-layout="horizontal"
-              :data-source="allDeployments"
-            >
-              <a-list-item slot="renderItem" slot-scope="item, index">
-                <a-avatar>{{ index }}</a-avatar>
-                <a slot="actions" v-on:click="edit(item)">edit</a>
-                <a slot="actions" v-on:click="del(item)">delete</a>
-                <a-list-item-meta
-                  ><div slot="description">
-                    {{ item.description }}
-                  </div></a-list-item-meta
-                >
-                <div>{{ item.name }} on Port {{ item.ports[0] }}</div>
-              </a-list-item>
-              <a-divider></a-divider>
-            </a-list>
-          </a-col>
-        </a-row>
-      </a-card>
+          </a-list>
+        </a-col>
+      </a-row>
+    </a-card>
 
-      <a-button type="primary" @click="showDrawer" style="margin-top: 15px">
-        <a-icon type="plus" /> Deploy
-      </a-button>
-      <a-drawer
-        title="Create a new Deployment"
-        :width="720"
-        :visible="visible"
-        :body-style="{ paddingBottom: '80px' }"
-        @close="onClose"
-      >
-        <a-form-model :model="form" layout="vertical" hide-required-mark>
-          <a-form-model-item label="Deployment name">
-            <a-input
-              v-model="form.name"
-              placeholder="Name for your new Deployment"
-            />
-          </a-form-model-item>
+    <a-button type="primary" @click="showDrawer" style="margin-top: 15px">
+      <a-icon type="plus" /> Deploy
+    </a-button>
+    <a-drawer
+      title="Create a new Deployment"
+      :width="720"
+      :visible="visible"
+      :body-style="{ paddingBottom: '80px' }"
+      @close="onClose"
+    >
+      <a-form-model :model="form" layout="vertical" hide-required-mark>
+        <a-form-model-item label="Deployment name">
+          <a-input
+            v-model="form.name"
+            placeholder="Name for your new Deployment"
+          />
+        </a-form-model-item>
 
-          <a-form-model-item label="Description">
-            <a-textarea
-              v-model="form.description"
-              placeholder="Describe your new Deployment"
-              :auto-size="{ minRows: 3, maxRows: 6 }"
-            />
-          </a-form-model-item>
-          <a-divider>Image</a-divider>
+        <a-form-model-item label="Description">
+          <a-textarea
+            v-model="form.description"
+            placeholder="Describe your new Deployment"
+            :auto-size="{ minRows: 3, maxRows: 6 }"
+          />
+        </a-form-model-item>
+        <a-divider>Image</a-divider>
 
-          <a-form-model-item>
-            <a-row :gutter="16">
-              <a-col :span="12">
-                <a-list
-                  size="small"
-                  item-layout="horizontal"
-                  :data-source="currentImages"
+        <a-form-model-item>
+          <a-row :gutter="16">
+            <a-col :span="12">
+              <a-list
+                size="small"
+                item-layout="horizontal"
+                :data-source="currentImages"
+              >
+                <a-list-item
+                  slot="renderItem"
+                  slot-scope="item, index"
+                  v-if="index < 3"
                 >
-                  <a-list-item
-                    slot="renderItem"
-                    slot-scope="item, index"
-                    v-if="index < 3"
-                  >
-                    <a-button v-on:click="select(item)">{{
-                      item.name
-                    }}</a-button>
-                  </a-list-item>
-                </a-list>
-              </a-col>
+                  <a-button v-on:click="select(item)">{{ item.name }}</a-button>
+                </a-list-item>
+              </a-list>
+            </a-col>
 
-              <a-col :span="12" style="margin-top: 35px">
-                <label for="imgLabel">Your Image</label>
-                <a-input
-                  name="imgLabel"
-                  placeholder="Search your Image or paste Image URL"
-                  v-on:change="imgChange()"
-                  v-model="form.image"
-                ></a-input>
-              </a-col>
-            </a-row>
-          </a-form-model-item>
-          <a-form-model-item>
-            <a-divider>Mounts</a-divider>
-            <a-list
-              size="small"
-              item-layout="horizontal"
-              :data-source="form.mounts"
-            >
-              <a-list-item slot="renderItem" slot-scope="item, index">
-                <a-input
-                  v-model="form.mounts[index]"
-                  placeholder="Enter your data mounts"
-                >
-                </a-input>
-              </a-list-item>
-            </a-list>
-            <a-button type="primary" @click="addMount">
-              <a-icon type="plus" /> Add
-            </a-button>
-          </a-form-model-item>
-          <a-form-model-item>
-            <a-divider>Ports</a-divider>
-            <a-list
-              size="small"
-              item-layout="horizontal"
-              :data-source="form.ports"
-            >
-              <a-list-item slot="renderItem" slot-scope="item, index">
-                <a-input
-                  v-model="form.ports[index]"
-                  placeholder="Pass your port (PORT-TO:PORT-FROM)"
-                >
-                </a-input>
-              </a-list-item>
-            </a-list>
-            <a-button type="primary" @click="addPort">
-              <a-icon type="plus" /> Add
-            </a-button>
-          </a-form-model-item>
-
-          <a-form-model-item>
-            <a-divider>Environment</a-divider>
-            <a-list
-              size="small"
-              item-layout="horizontal"
-              :data-source="form.environment"
-            >
-              <a-list-item slot="renderItem" slot-scope="item, index">
-                <a-input
-                  type="text"
-                  v-model="form.environment[index].k"
-                  style="margin-right: 10px"
-                  placeholder="Key"
-                >
-                </a-input>
-                <a-input
-                  type="text"
-                  v-model="form.environment[index].val"
-                  style="margin-left: 10px"
-                  placeholder="Value"
-                >
-                </a-input>
-              </a-list-item>
-            </a-list>
-            <a-button
-              type="primary"
-              @click="addEnv"
-              v-if="form.labels.length <= 3"
-            >
-              <a-icon type="plus" /> Add
-            </a-button>
-          </a-form-model-item>
-
-          <a-form-model-item>
-            <a-divider>Links</a-divider>
-            <a-list
-              size="small"
-              item-layout="horizontal"
-              :data-source="form.links"
-            >
-              <a-list-item slot="renderItem" slot-scope="item, index">
-                <a-input
-                  type="text"
-                  v-model="form.links[index].k"
-                  style="margin-right: 10px"
-                  placeholder="Key"
-                >
-                </a-input>
-                <a-input
-                  type="text"
-                  v-model="form.links[index].val"
-                  style="margin-left: 10px"
-                  placeholder="Value"
-                >
-                </a-input>
-              </a-list-item>
-            </a-list>
-            <a-button
-              type="primary"
-              @click="addLink"
-              v-if="form.labels.length <= 3"
-            >
-              <a-icon type="plus" /> Add
-            </a-button>
-          </a-form-model-item>
-
-          <a-form-model-item>
-            <a-divider>Labels</a-divider>
-            <a-list
-              size="small"
-              item-layout="horizontal"
-              :data-source="form.labels"
-            >
-              <a-list-item slot="renderItem" slot-scope="item, index">
-                <a-input
-                  type="text"
-                  v-model="form.labels[index].k"
-                  style="margin-right: 10px"
-                  placeholder="Key"
-                >
-                </a-input>
-                <a-input
-                  type="text"
-                  v-model="form.labels[index].val"
-                  style="margin-left: 10px"
-                  placeholder="Value"
-                >
-                </a-input>
-              </a-list-item>
-            </a-list>
-            <a-button
-              type="primary"
-              @click="addLabel"
-              v-if="form.labels.length <= 3"
-            >
-              <a-icon type="plus" /> Add
-            </a-button>
-          </a-form-model-item>
-        </a-form-model>
-        <div
-          :style="{
-            position: 'absolute',
-            right: 0,
-            bottom: 0,
-            width: '100%',
-            borderTop: '1px solid #e9e9e9',
-            padding: '10px 16px',
-            background: '#fff',
-            textAlign: 'right',
-            zIndex: 1
-          }"
-        >
-          <a-button :style="{ marginRight: '8px' }" @click="onClose">
-            Cancel
+            <a-col :span="12" style="margin-top: 35px">
+              <label for="imgLabel">Your Image</label>
+              <a-input
+                name="imgLabel"
+                placeholder="Search your Image or paste Image URL"
+                v-on:change="imgChange()"
+                v-model="form.image"
+              ></a-input>
+            </a-col>
+          </a-row>
+        </a-form-model-item>
+        <a-form-model-item>
+          <a-divider>Mounts</a-divider>
+          <a-list
+            size="small"
+            item-layout="horizontal"
+            :data-source="form.mounts"
+          >
+            <a-list-item slot="renderItem" slot-scope="item, index">
+              <a-input
+                v-model="form.mounts[index]"
+                placeholder="Enter your data mounts"
+              >
+              </a-input>
+            </a-list-item>
+          </a-list>
+          <a-button type="primary" @click="addMount">
+            <a-icon type="plus" /> Add
           </a-button>
-          <a-button type="primary" @click="onSubmit">
-            Submit
+        </a-form-model-item>
+        <a-form-model-item>
+          <a-divider>Ports</a-divider>
+          <a-list
+            size="small"
+            item-layout="horizontal"
+            :data-source="form.ports"
+          >
+            <a-list-item slot="renderItem" slot-scope="item, index">
+              <a-input
+                v-model="form.ports[index]"
+                placeholder="Pass your port (PORT-TO:PORT-FROM)"
+              >
+              </a-input>
+            </a-list-item>
+          </a-list>
+          <a-button type="primary" @click="addPort">
+            <a-icon type="plus" /> Add
           </a-button>
-        </div>
-      </a-drawer>
+        </a-form-model-item>
 
-      <a-timeline
-        mode="right"
-        style="margin-right: 50%; margin-top: 25px"
-        v-if="deployState != 0"
+        <a-form-model-item>
+          <a-divider>Environment</a-divider>
+          <a-list
+            size="small"
+            item-layout="horizontal"
+            :data-source="form.environment"
+          >
+            <a-list-item slot="renderItem" slot-scope="item, index">
+              <a-input
+                type="text"
+                v-model="form.environment[index].k"
+                style="margin-right: 10px"
+                placeholder="Key"
+              >
+              </a-input>
+              <a-input
+                type="text"
+                v-model="form.environment[index].val"
+                style="margin-left: 10px"
+                placeholder="Value"
+              >
+              </a-input>
+            </a-list-item>
+          </a-list>
+          <a-button
+            type="primary"
+            @click="addEnv"
+          >
+            <a-icon type="plus" /> Add
+          </a-button>
+        </a-form-model-item>
+        <a-form-model-item>
+          <a-divider>Labels</a-divider>
+          <a-list
+            size="small"
+            item-layout="horizontal"
+            :data-source="form.labels"
+          >
+            <a-list-item slot="renderItem" slot-scope="item, index">
+              <a-input
+                type="text"
+                v-model="form.labels[index].k"
+                style="margin-right: 10px"
+                placeholder="Key"
+              >
+              </a-input>
+              <a-input
+                type="text"
+                v-model="form.labels[index].val"
+                style="margin-left: 10px"
+                placeholder="Value"
+              >
+              </a-input>
+            </a-list-item>
+          </a-list>
+          <a-button
+            type="primary"
+            @click="addLabel"
+          >
+            <a-icon type="plus" /> Add
+          </a-button>
+        </a-form-model-item>
+      </a-form-model>
+      <div
+        :style="{
+          position: 'absolute',
+          right: 0,
+          bottom: 0,
+          width: '100%',
+          borderTop: '1px solid #e9e9e9',
+          padding: '10px 16px',
+          background: '#fff',
+          textAlign: 'right',
+          zIndex: 1
+        }"
       >
-        <a-timeline-item>
-          <a-icon
-            slot="dot"
-            type="clock-circle-o"
-            style="font-size: 16px;"
-            v-if="deployState == 1"
-          />
-          Create your Deployment</a-timeline-item
-        >
-        <a-timeline-item>
-          <a-icon
-            slot="dot"
-            type="clock-circle-o"
-            style="font-size: 16px;"
-            v-if="deployState == 2"
-          />
-          Pull your image from the repository</a-timeline-item
-        >
-        <a-timeline-item>
-          <a-icon
-            slot="dot"
-            type="clock-circle-o"
-            style="font-size: 16px;"
-            v-if="deployState == 3"
-          />
-          Create your container
-        </a-timeline-item>
-        <a-timeline-item>
-          <a-icon
-            slot="dot"
-            type="clock-circle-o"
-            style="font-size: 16px;"
-            v-if="deployState == 4"
-          />
-          Start your Container</a-timeline-item
-        >
-        <a-timeline-item>
-          <a-icon
-            slot="dot"
-            type="check-circle-o"
-            style="font-size: 16px;"
-            v-if="deployState == 5"
-          />
-          Finished!</a-timeline-item
-        >
-      </a-timeline>
+        <a-button :style="{ marginRight: '8px' }" @click="onClose">
+          Cancel
+        </a-button>
+        <a-button type="primary" @click="onSubmit">
+          Submit
+        </a-button>
+      </div>
+    </a-drawer>
 
-      <a-modal v-model="editMode" title="Edit your Deployment" @ok="handleOk">
-        <a-textarea v-model="toEditJSON" auto-size>
-          {{ toEditJSON }}
-        </a-textarea>
-      </a-modal>
-
-      <a-modal
-        v-model="deleteMode"
-        title="Delete your deployment"
-        @ok="handleDelete"
+    <a-timeline
+      mode="right"
+      style="margin-right: 50%; margin-top: 25px"
+      v-if="deployState != 0"
+    >
+      <a-timeline-item>
+        <a-icon
+          slot="dot"
+          type="clock-circle-o"
+          style="font-size: 16px;"
+          v-if="deployState == 1"
+        />
+        Create your Deployment</a-timeline-item
       >
-        <a-checkbox v-model="deleteContainer"
-          >Delete connected Container?</a-checkbox
-        >
-      </a-modal>
-    </a-layout-content>
+      <a-timeline-item>
+        <a-icon
+          slot="dot"
+          type="clock-circle-o"
+          style="font-size: 16px;"
+          v-if="deployState == 2"
+        />
+        Pull your image from the repository</a-timeline-item
+      >
+      <a-timeline-item>
+        <a-icon
+          slot="dot"
+          type="clock-circle-o"
+          style="font-size: 16px;"
+          v-if="deployState == 3"
+        />
+        Create your container
+      </a-timeline-item>
+      <a-timeline-item>
+        <a-icon
+          slot="dot"
+          type="clock-circle-o"
+          style="font-size: 16px;"
+          v-if="deployState == 4"
+        />
+        Start your Container</a-timeline-item
+      >
+      <a-timeline-item>
+        <a-icon
+          slot="dot"
+          type="check-circle-o"
+          style="font-size: 16px;"
+          v-if="deployState == 5"
+        />
+        Finished!</a-timeline-item
+      >
+    </a-timeline>
+
+    <a-modal v-model="editMode" title="Edit your Deployment" @ok="handleOk">
+      <a-textarea v-model="toEditJSON" auto-size>
+        {{ toEditJSON }}
+      </a-textarea>
+    </a-modal>
+
+    <a-modal
+      v-model="deleteMode"
+      title="Delete your deployment"
+      @ok="handleDelete"
+    >
+      <a-checkbox v-model="deleteContainer"
+        >Delete connected Container?</a-checkbox
+      >
+    </a-modal>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import DeployService from '@/services/deploy.service';
-import ImageService from '@/services/image.service';
-import ContainerService from '@/services/container.service';
-import DeploymentInterface from '@/interfaces/deployment.interface';
+import { Component, Vue } from "vue-property-decorator";
+import DeploymentService from "@/services/DeploymentService";
+import ImageService from "@/services/ImageService";
+import ContainerService from "@/services/ContainerService";
+import {DeploymentInterface} from "@/interfaces/DeploymentInterface";
+import { ContainerInterface } from "@/interfaces/ContainerInterface";
 
 enum DeployState {
   NOTHING,
@@ -372,9 +324,9 @@ enum DeployState {
   READY
 }
 
-@Component({})
+@Component
 export default class Deployment extends Vue {
-  deployService: DeployService = new DeployService();
+  deployService: DeploymentService = new DeploymentService();
   imageService: ImageService = new ImageService();
   currentImages: any[] = [];
   allImages: any[] = [];
@@ -384,21 +336,20 @@ export default class Deployment extends Vue {
   deleteMode = false;
   deleteContainer = false;
   form: DeploymentInterface = {
-    name: '',
-    description: '',
-    image: '',
-    mounts: [''],
-    ports: [''],
-    environment: [{ k: '', val: '' }],
-    labels: [{ k: '', val: '' }],
-    links: [{ k: '', val: '' }]
+    name: "",
+    description: "",
+    image: "",
+    mounts: [""],
+    ports: [""],
+    environment: [{ k: "", val: "" }],
+    labels: [{ k: "", val: "" }],
   };
   alertMessage: string[] = [];
   deployState: DeployState = DeployState.NOTHING;
   allDeployments: any = [];
   skip = 0;
   take = 20;
-  toEditJSON = '';
+  toEditJSON = "";
 
   selectedItem: any;
 
@@ -430,32 +381,31 @@ export default class Deployment extends Vue {
     this.deployState = DeployState.NOTHING;
     this.visible = false;
     this.parseForm();
-    console.log('PARSED');
     if (!this.validate()) return;
 
     try {
       this.deployState = DeployState.CREATE;
-      const deploy = await this.deployService.createDeployment(this.form);
+      const deploy = await this.deployService.create(this.form);
 
       this.deployState = DeployState.PULL;
       const pull = await this.imageService.pull(deploy.data.data);
 
       this.deployState = DeployState.CCONTAINER;
-      const cont = await this.containerService.create(deploy.data.data);
+      const dep : ContainerInterface = {deployment: deploy.data.data};
+      const cont = await this.containerService.create(dep);
 
       this.deployState = DeployState.RCONTAINER;
       const contStart = await this.containerService.start(cont.data.data);
       this.deployState = DeployState.READY;
       this.getAllDeployments(0, this.allDeployments.length + 1);
       this.form = {
-        name: '',
-        description: '',
-        image: '',
-        mounts: [''],
-        ports: [''],
-        environment: [{ k: '', val: '' }],
-        labels: [{ k: '', val: '' }],
-        links: [{ k: '', val: '' }]
+        name: "",
+        description: "",
+        image: "",
+        mounts: [""],
+        ports: [""],
+        environment: [{ k: "", val: "" }],
+        labels: [{ k: "", val: "" }]
       };
     } catch (e) {
       this.alertMessage.push(e);
@@ -488,7 +438,7 @@ export default class Deployment extends Vue {
     const realEnv: any = {};
     for (let i = 0; i < this.form.environment.length; i++) {
       const k = this.form.environment[i].k;
-      if (k == '' || this.form.environment[i].val == '') {
+      if (k == "" || this.form.environment[i].val == "") {
         this.form.environment.splice(i, 1);
         i = 0;
         continue;
@@ -498,22 +448,10 @@ export default class Deployment extends Vue {
     }
     this.form.environment = realEnv;
 
-    const realLink: any = {};
-    for (let i = 0; i < this.form.links.length; i++) {
-      const k = this.form.links[i].k;
-      if (k == '' || this.form.links[i].val == '') {
-        this.form.links.splice(i, 1);
-        i = 0;
-        continue;
-      }
-      realLink[k] = this.form.links[i].val;
-    }
-    this.form.links = realLink;
-
     const realLabel: any = {};
     for (let i = 0; i < this.form.labels.length; i++) {
       const k = this.form.labels[i].k;
-      if (k == '' || this.form.labels[i].val == '') {
+      if (k == "" || this.form.labels[i].val == "") {
         this.form.labels.splice(i, 1);
         i = 0;
         continue;
@@ -521,6 +459,8 @@ export default class Deployment extends Vue {
       realLabel[k] = this.form.labels[i].val;
     }
     this.form.labels = realLabel;
+
+    console.log(this.form);
   }
 
   validate() {
@@ -566,19 +506,17 @@ export default class Deployment extends Vue {
   }
 
   addMount() {
-    this.form.mounts.push('');
+    this.form.mounts.push("");
   }
   addPort() {
-    this.form.ports.push('');
+    this.form.ports.push("");
   }
   addEnv() {
-    this.form.environment.push({ k: '', val: '' });
+    this.form.environment.push({ k: "", val: "" });
   }
-  addLink() {
-    this.form.links.push({ k: '', val: '' });
-  }
+
   addLabel() {
-    this.form.labels.push({ k: '', val: '' });
+    this.form.labels.push({ k: "", val: "" });
   }
 
   async del(item: any) {
@@ -593,7 +531,7 @@ export default class Deployment extends Vue {
 
   async handleOk() {
     const json: any = JSON.parse(this.toEditJSON);
-    const edit = await this.deployService.updateById(json.id, json);
+    const edit = await this.deployService.update(json.id, json);
     this.editMode = false;
     this.getAllDeployments(this.skip, this.take);
   }
@@ -605,7 +543,7 @@ export default class Deployment extends Vue {
       await this.containerService.delete(el.id);
     }
 
-    await this.deployService.deleteById(this.selectedItem.id);
+    await this.deployService.delete(this.selectedItem.id);
     this.getAllDeployments(this.skip, this.take);
 
     this.selectedItem = null;

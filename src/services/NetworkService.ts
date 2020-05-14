@@ -1,16 +1,11 @@
 import ApiClient from './ApiClient';
+import { NetworkConnectInterface } from "@/interfaces/Network/NetworkConnectInterface";
+import { NetworkCreateInterface } from "@/interfaces/Network/NetworkCreateInterface";
 
-export interface NetworkCreateInterface {
-  name: string;
-  description: string;
-  subnet: string;
-}
 
-export interface NetworkConnectInterface {
-  container: string;
-}
 
-class NetworkService {
+
+export default class NetworkService {
   public getAll(skip: number, take: number) {
     return ApiClient.get(`network?skip=${skip}&take=${take}`);
   }
@@ -36,4 +31,3 @@ class NetworkService {
   }
 }
 
-export default new NetworkService();
