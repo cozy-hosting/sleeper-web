@@ -1,5 +1,11 @@
 <template>
   <div>
+<<<<<<< HEAD
+=======
+    <portal to="sidebar">
+        <p>Example Sidebar Content</p>
+    </portal>
+>>>>>>> staging
     <a-breadcrumb style="margin: 16px 0">
       <a-breadcrumb-item>Home</a-breadcrumb-item>
     </a-breadcrumb>
