@@ -357,11 +357,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import DeployService from "@/services/deploy.service";
-import ImageService from "@/services/image.service";
-import ContainerService from "@/services/container.service";
-import DeploymentInterface from "@/interfaces/deployment.interface";
+import { Component, Vue } from 'vue-property-decorator';
+import DeployService from '@/services/deploy.service';
+import ImageService from '@/services/image.service';
+import ContainerService from '@/services/container.service';
+import DeploymentInterface from '@/interfaces/deployment.interface';
 
 enum DeployState {
   NOTHING,
@@ -384,21 +384,21 @@ export default class Deployment extends Vue {
   deleteMode = false;
   deleteContainer = false;
   form: DeploymentInterface = {
-    name: "",
-    description: "",
-    image: "",
-    mounts: [""],
-    ports: [""],
-    environment: [{ k: "", val: "" }],
-    labels: [{ k: "", val: "" }],
-    links: [{ k: "", val: "" }]
+    name: '',
+    description: '',
+    image: '',
+    mounts: [''],
+    ports: [''],
+    environment: [{ k: '', val: '' }],
+    labels: [{ k: '', val: '' }],
+    links: [{ k: '', val: '' }]
   };
   alertMessage: string[] = [];
   deployState: DeployState = DeployState.NOTHING;
   allDeployments: any = [];
   skip = 0;
   take = 20;
-  toEditJSON = "";
+  toEditJSON = '';
 
   selectedItem: any;
 
@@ -430,7 +430,7 @@ export default class Deployment extends Vue {
     this.deployState = DeployState.NOTHING;
     this.visible = false;
     this.parseForm();
-    console.log("PARSED");
+    console.log('PARSED');
     if (!this.validate()) return;
 
     try {
@@ -448,14 +448,14 @@ export default class Deployment extends Vue {
       this.deployState = DeployState.READY;
       this.getAllDeployments(0, this.allDeployments.length + 1);
       this.form = {
-        name: "",
-        description: "",
-        image: "",
-        mounts: [""],
-        ports: [""],
-        environment: [{ k: "", val: "" }],
-        labels: [{ k: "", val: "" }],
-        links: [{ k: "", val: "" }]
+        name: '',
+        description: '',
+        image: '',
+        mounts: [''],
+        ports: [''],
+        environment: [{ k: '', val: '' }],
+        labels: [{ k: '', val: '' }],
+        links: [{ k: '', val: '' }]
       };
     } catch (e) {
       this.alertMessage.push(e);
@@ -488,7 +488,7 @@ export default class Deployment extends Vue {
     const realEnv: any = {};
     for (let i = 0; i < this.form.environment.length; i++) {
       const k = this.form.environment[i].k;
-      if (k == "" || this.form.environment[i].val == "") {
+      if (k == '' || this.form.environment[i].val == '') {
         this.form.environment.splice(i, 1);
         i = 0;
         continue;
@@ -501,7 +501,7 @@ export default class Deployment extends Vue {
     const realLink: any = {};
     for (let i = 0; i < this.form.links.length; i++) {
       const k = this.form.links[i].k;
-      if (k == "" || this.form.links[i].val == "") {
+      if (k == '' || this.form.links[i].val == '') {
         this.form.links.splice(i, 1);
         i = 0;
         continue;
@@ -513,7 +513,7 @@ export default class Deployment extends Vue {
     const realLabel: any = {};
     for (let i = 0; i < this.form.labels.length; i++) {
       const k = this.form.labels[i].k;
-      if (k == "" || this.form.labels[i].val == "") {
+      if (k == '' || this.form.labels[i].val == '') {
         this.form.labels.splice(i, 1);
         i = 0;
         continue;
@@ -566,19 +566,19 @@ export default class Deployment extends Vue {
   }
 
   addMount() {
-    this.form.mounts.push("");
+    this.form.mounts.push('');
   }
   addPort() {
-    this.form.ports.push("");
+    this.form.ports.push('');
   }
   addEnv() {
-    this.form.environment.push({ k: "", val: "" });
+    this.form.environment.push({ k: '', val: '' });
   }
   addLink() {
-    this.form.links.push({ k: "", val: "" });
+    this.form.links.push({ k: '', val: '' });
   }
   addLabel() {
-    this.form.labels.push({ k: "", val: "" });
+    this.form.labels.push({ k: '', val: '' });
   }
 
   async del(item: any) {
