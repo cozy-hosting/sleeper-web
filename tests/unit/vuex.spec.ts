@@ -1,4 +1,4 @@
-import {Store} from "vuex";
+import { Store } from "vuex";
 
 describe("Vuex", () => {
   it("defines a store", async () => {
