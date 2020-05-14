@@ -1,4 +1,4 @@
-import ApiClient from "./apiConfig";
+import ApiClient from './ApiClient';
 
 export interface DeploymentInterface {
   name: string;
@@ -24,7 +24,7 @@ class DeploymentService {
   }
 
   public create(deployment: DeploymentInterface) {
-    return ApiClient.post("deployment", deployment);
+    return ApiClient.post('deployment', deployment);
   }
 
   public update(id: number, deployment: DeploymentInterface) {

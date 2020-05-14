@@ -1,4 +1,4 @@
-import ApiClient from "./apiConfig";
+import ApiClient from './ApiClient';
 
 export interface ImageInterface {
   deployment: string;
@@ -15,8 +15,8 @@ class ImageService {
 
   public create(image: ImageInterface, username?: string, password?: string) {
     return username && password
-      ? ApiClient.post("image", image, { headers: { username, password } })
-      : ApiClient.post("image", image);
+      ? ApiClient.post('image', image, { headers: { username, password } })
+      : ApiClient.post('image', image);
   }
 
   public update(id: number) {

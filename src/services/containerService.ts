@@ -1,4 +1,4 @@
-import ApiClient from "./apiConfig";
+import ApiClient from './ApiClient';
 
 export interface ContainerInterface {
   deployment: string;
@@ -14,7 +14,7 @@ class ContainerService {
   }
 
   public create(container: ContainerInterface) {
-    return ApiClient.post("container", container);
+    return ApiClient.post('container', container);
   }
 
   public start(id: number) {

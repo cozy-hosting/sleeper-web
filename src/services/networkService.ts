@@ -1,4 +1,4 @@
-import ApiClient from "./apiConfig";
+import ApiClient from './ApiClient';
 
 export interface NetworkCreateInterface {
   name: string;
@@ -20,7 +20,7 @@ class NetworkService {
   }
 
   public create(network: NetworkCreateInterface) {
-    return ApiClient.post("network", network);
+    return ApiClient.post('network', network);
   }
 
   public connect(id: number, network: NetworkConnectInterface) {

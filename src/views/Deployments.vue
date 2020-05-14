@@ -1,9 +1,6 @@
 <template>
   <div>
-<<<<<<< HEAD
-=======
     <portal to="sidebar"></portal>
->>>>>>> staging
     <a-breadcrumb style="margin: 16px 0">
       <a-breadcrumb-item
         ><router-link to="/">Home</router-link></a-breadcrumb-item
@@ -13,9 +10,6 @@
     <a-layout-content
       :style="{ background: '#fff', padding: '24px', margin: 0 }"
     >
-<<<<<<< HEAD
-      <p>Deployments</p>
-=======
       <a-alert
         v-if="alertMessage.length > 0"
         message="Error"
@@ -358,7 +352,6 @@
           >Delete connected Container?</a-checkbox
         >
       </a-modal>
->>>>>>> staging
     </a-layout-content>
   </div>
 </template>
