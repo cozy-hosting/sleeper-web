@@ -10,7 +10,7 @@ export default class NetworkService {
     return ApiClient.get(`network?skip=${skip}&take=${take}`);
   }
 
-  public getById(id: number) {
+  public getById(id: string) {
     return ApiClient.get(`network/${id}`);
   }
 
@@ -18,15 +18,15 @@ export default class NetworkService {
     return ApiClient.post('network', network);
   }
 
-  public connect(id: number, network: NetworkConnectInterface) {
+  public connect(id: string, network: NetworkConnectInterface) {
     return ApiClient.post(`network/${id}/connect`, network);
   }
 
-  public disconnect(id: number, network: NetworkConnectInterface) {
+  public disconnect(id: string, network: NetworkConnectInterface) {
     return ApiClient.post(`network/${id}/disconnect`, network);
   }
 
-  public delete(id: number) {
+  public delete(id: string) {
     return ApiClient.delete(`network/${id}`);
   }
 }

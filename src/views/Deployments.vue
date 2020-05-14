@@ -1,5 +1,11 @@
 <template>
   <div class="deployment">
+        <a-breadcrumb style="margin: 16px 0">
+      <a-breadcrumb-item>
+        <router-link to="/">Home</router-link>
+      </a-breadcrumb-item>
+      <a-breadcrumb-item>Deployments</a-breadcrumb-item>
+    </a-breadcrumb>
     <a-alert
       v-if="alertMessage.length > 0"
       message="Error"
@@ -459,8 +465,6 @@ export default class Deployment extends Vue {
       realLabel[k] = this.form.labels[i].val;
     }
     this.form.labels = realLabel;
-
-    console.log(this.form);
   }
 
   validate() {
