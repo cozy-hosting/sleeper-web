@@ -7,6 +7,7 @@ import Images from "@/views/Images.vue";
 import Authentication from "@/views/Authentication.vue";
 import store from "@/store";
 import AuthenticationService from "@/services/AuthenticationService";
+import Networks from "@/views/Networks.vue";
 
 Vue.use(VueRouter);
 
@@ -35,6 +36,11 @@ const routes: Array<RouteConfig> = [
     path: "/login",
     name: "Authentication",
     component: Authentication,
+  },
+  {
+    path: "/networks",
+    name: "Networks",
+    component: Networks
   },
   {
     path: "*",

@@ -1,20 +1,8 @@
 import ApiClient from './ApiClient';
+import { DeploymentInterface } from "@/interfaces/DeploymentInterface";
 
-export interface DeploymentInterface {
-  name: string;
-  description: string;
-  image: string;
-  ports: string[];
-  mounts: string[];
-  environment: {
-    [key: string]: string;
-  };
-  labels: {
-    [key: string]: string;
-  };
-}
 
-class DeploymentService {
+export default class DeploymentService {
   public getAll(skip: number, take: number) {
     return ApiClient.get(`deployment?skip=${skip}&take=${take}`);
   }
@@ -35,5 +23,3 @@ class DeploymentService {
     return ApiClient.delete(`deployment/${id}`);
   }
 }
-
-export default new DeploymentService();

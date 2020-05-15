@@ -14,6 +14,7 @@
         <a-menu-item key="/deployments">Deployments</a-menu-item>
         <a-menu-item key="/containers">Containers</a-menu-item>
         <a-menu-item key="/images">Images</a-menu-item>
+        <a-menu-item key="/networks">Networks</a-menu-item>
         <a-menu-item key="/login" type="primary" id="logout-btn"
           ><a-button type="primary" @click="logout"
             >Logout</a-button

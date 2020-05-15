@@ -1,10 +1,8 @@
 import ApiClient from './ApiClient';
+import { ImageInterface } from "@/interfaces/ImageInterface";
 
-export interface ImageInterface {
-  deployment: string;
-}
 
-class ImageService {
+export default class ImageService {
   public getAll(skip: number, take: number) {
     return ApiClient.get(`image?skip=${skip}&take=${take}`);
   }
@@ -26,6 +24,10 @@ class ImageService {
   public delete(id: number) {
     return ApiClient.delete(`image/${id}`);
   }
+
+  public pull(depID: string) {
+    const url = "/Image";
+    return ApiClient.post(url, { deployment: depID });
+  }
 }
 
-export default new ImageService();
