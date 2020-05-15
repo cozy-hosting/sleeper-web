@@ -1,6 +1,6 @@
 <template>
   <div>
-    <portal to="sidebar"></portal>
+    <network-sidenav-component v-bind:info="sideInfo"></network-sidenav-component>
     <a-breadcrumb style="margin: 16px 0">
       <a-breadcrumb-item>
         <router-link to="/">Home</router-link>
@@ -74,14 +74,19 @@
               </a-row>
     </a-modal>
 
-    <a-modal v-model="connectNetworkModal" title="Attach Container to Container" @ok="handleAttach()">
+    <a-modal v-model="connectNetworkModal" title="Attach Container to Network" @ok="handleAttach()">
       <label>Select Container</label>
 <a-auto-complete style="width: 100%" v-if="connectNetworkModal"
-      :data-source="allContainerImages"
       placeholder="Available Containers"
+      v-model="selectedContainer.name"
       :filter-option="filterOption"
-      v-model="selectedContainer"
-    />
+  >
+  <template slot="dataSource">
+  <a-select-option v-for="cont in allContainerDisplay" :key="cont.name" >
+            {{ cont.name }}
+  </a-select-option>
+  </template>
+  </a-auto-complete>
     </a-modal>
     </a-layout-content>
   </div>
@@ -91,18 +96,28 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
+import NetworkSidenavComponent from "@/components/Networks/NetworksSidenavComponent.vue";
+
 import NetworkService from "@/services/NetworkService";
 import ContainerService from "@/services/ContainerService";
 import { NetworkCreateInterface } from "@/interfaces/Network/NetworkCreateInterface";
 import { NetworkConnectInterface } from "@/interfaces/Network/NetworkConnectInterface";
 import { NetworkInterface } from "@/interfaces/Network/NetworkInterface";
 import { SubnetInterface } from "@/interfaces/Network/SubnetInterface";
+import DeploymentService from '../services/DeploymentService';
 
-@Component({})
+interface ContainerDisplayInterface
+{
+  name: string;
+  id: string;
+}
+
+@Component({components: {NetworkSidenavComponent}})
 export default class Networks extends Vue 
 {
   netService: NetworkService = new NetworkService();
   containerService: ContainerService = new ContainerService();
+  deployService: DeploymentService = new DeploymentService();
 
   creationModalVisible = false;
   connectNetworkModal = false;
@@ -115,8 +130,10 @@ export default class Networks extends Vue
 
   selectedNetwork: string | undefined;
   allContainer: any | undefined;
-  selectedContainer = "";
-  allContainerImages: string[] = [];
+  selectedContainer: ContainerDisplayInterface  = {name: "", id:""};
+  allContainerDisplay: ContainerDisplayInterface[] = [];
+
+  sideInfo: any | undefined = {};
 
   showCreateModal()
   {
@@ -125,7 +142,6 @@ export default class Networks extends Vue
   }
 
   filterOption(input: any, option: any) {
-    console.log(this.allContainerImages);
       return (
         option.componentOptions.children[0].text.toUpperCase().indexOf(input.toUpperCase()) >= 0
       );
@@ -133,13 +149,30 @@ export default class Networks extends Vue
 
   async handleAttach()
   {
-    if(!this.allContainerImages.includes(this.selectedContainer as string) || this.selectedContainer == undefined)
+
+    try
     {
+    this.selectedContainer = this.allContainerDisplay.find((x: any) => x.name == this.selectedContainer.name) as any;
+    }
+    catch(e)
+    {
+         this.connectNetworkModal = false;
+    this.selectedContainer = {name: "", id:""};
+    this.selectedNetwork = undefined;
       this.alertMessage.push("Search for an existing container.");
       return;
     }
 
-    const container = this.allContainer.find((x: any)=>x.image==this.selectedContainer);
+    if(!this.allContainerDisplay.includes(this.selectedContainer as ContainerDisplayInterface) || this.selectedContainer == undefined)
+    {
+      this.alertMessage.push("Search for an existing container.");
+         this.connectNetworkModal = false;
+    this.selectedContainer = {name: "", id:""};
+    this.selectedNetwork = undefined;
+      return;
+    }
+
+    const container = this.allContainer.find((x: any)=>x.id==(this.selectedContainer as ContainerDisplayInterface).id);
     const conInt : NetworkConnectInterface = { container: container.id};
     try
     {
@@ -153,24 +186,21 @@ export default class Networks extends Vue
     }
 
     this.connectNetworkModal = false;
-    this.selectedContainer = "";
+    this.selectedContainer = {name: "", id:""};
     this.selectedNetwork = undefined;
   }
 
 
-  getContainerInfo(id: string)
+  async getContainerInfo(id: string)
   {
-    return 0;
+    const containerInfo = (await this.containerService.getById(id)).data.data;
+    const deploymentInfo = (await this.deployService.getById(containerInfo.deployment)).data.data;
+    this.sideInfo = {containerInfo, deploymentInfo};
+    
   }
   async getNets()
   {
     this.allNetworks = (await this.netService.getAll(0, 20)).data.data;
-    console.log(this.allNetworks);
-   /* for(let i =0; i<this.allNetworks.length; i++)
-    {
-      const detail = (await this.netService.getById(this.allNetworks[i].id)).data.data;
-      this.allNetworks[i].containers = detail.containers;
-    }*/
   }
 
   async mounted()
@@ -196,7 +226,7 @@ export default class Networks extends Vue
         const notOption: any= {message: "Nice!", description: "Your Network "+this.creationForm.name+" has been created!"};
     this.creationPending = false;
         await this.getNets();
-    this.$notification.open(notOption);
+    //this.$notification.open(notOption); TODO:
 
     }
     catch(e)
@@ -243,7 +273,7 @@ export default class Networks extends Vue
     {
     await this.netService.delete(id);
     const notOption: any= {message: "Success!", description: "Your Network "+this.creationForm.name+" has been deleted!"};
-    this.$notification.open(notOption);
+    //this.$notification.open(notOption); TODO:
     await this.getNets();
     }
     catch(e)
@@ -256,17 +286,19 @@ export default class Networks extends Vue
   async getContainer()
   {
     this.allContainer = (await this.containerService.getAll(0, 100)).data.data;
-    this.allContainerImages = [];
+    this.allContainerDisplay = [];
     for(let i =0; i<this.allContainer.length; i++)
     {
-      this.allContainerImages[i] = this.allContainer[i].image;
+      const deplName = (await this.deployService.getById(this.allContainer[i].deployment)).data.data.name;
+      this.allContainerDisplay[i] = { id: this.allContainer[i].id, name: deplName};
     }
   }
+
+  //selContName = "";
 
   async connectCont(id: string)
   {
     await this.getContainer();
-    console.log(this.allContainerImages);
     this.selectedNetwork = id;
     this.connectNetworkModal = true;
   }

@@ -6,7 +6,7 @@ export default class ContainerService {
     return ApiClient.get(`container?skip=${skip}&take=${take}`);
   }
 
-  public getById(id: number) {
+  public getById(id: string) {
     return ApiClient.get(`container/${id}`);
   }
 
