@@ -25,14 +25,14 @@
       </a-button>
       <a-divider>Your Networks <a-icon type="branches"/></a-divider>
       <a-row :gutter=24>
-      <div v-for="(nets,index) in allNetworks" :key="index"  >
-        <a-col :span=8 style="margin-bottom: 15px">
-        <a-card>
+      <div v-for="(nets,index) in allNetworks" :key="index" >
+        <a-col :span=8 style="margin-bottom: 15px;">
+        <a-card style="height: 462px; max-height: 100%">
           <h3 slot="title" style="float: right"><b>{{nets.name}}</b></h3>
-          <p style=" word-wrap: break-word; max-width: 100%" >{{nets.description}}<sub><b> @[ {{nets.subnet}} ]</b></sub></p>
+          <p style=" word-wrap: break-word; max-width: 100%; height: 80px; max-height: 80px; overflow:auto" >{{nets.description}}<sub><b> @[ {{nets.subnet}} ]</b></sub></p>
           <a-divider>Connected <a-icon type="codepen" /></a-divider>
 
-          <a-list item-layout="horizontal" :data-source="nets.containers">
+          <a-list item-layout="horizontal" :data-source="nets.containers" style="max-height: 150px; height: 150px; overflow: auto">
         <a-list-item a-list-item slot="renderItem" slot-scope="item, index" >
            <a-list-item-meta><a slot="title" v-on:click="getContainerInfo(item)">#{{index +1}}</a></a-list-item-meta> 
           <a slot="actions"><a-icon type="disconnect" v-on:click="dcContainer(item, nets.id)"/></a>
