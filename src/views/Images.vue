@@ -37,7 +37,7 @@ export default class Images extends Vue {
   created() {
     // prettier-ignore
     ImageService.getAll(0, 20)
-      .then(res => (this.images = res.data.data));
+      .then(res => this.images = res.data.data);
   }
 }
 </script>

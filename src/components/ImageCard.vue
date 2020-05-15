@@ -2,19 +2,14 @@
   <a-card
     :key="image.id"
     :title="image.name | name | capitalize"
+    :extra="image.name | version"
     :class="{ cardDelete: isDelete }"
   >
-    <dl class="info-list">
-      <dt>Version</dt>
-      <dd>{{ image.name | version }}</dd>
-      <dt>Id</dt>
-      <dd>{{ image.id }}</dd>
-    </dl>
-    <template v-slot:actions class="actions">
+    <template v-slot:actions>
       <template v-if="!isDelete">
         <div class="edit-button">
-          Edit
-          <a-icon type="edit" />
+          Update
+          <a-icon type="reload" />
         </div>
         <div class="delete-button" @click="toggleIsDelete">
           Delete
@@ -55,12 +50,21 @@ export default class ImageCard extends Vue {
   handleDelete() {
     // prettier-ignore
     ImageService.delete(this.image.id)
-      .then(res => console.log(res));
+      .then(_ => this.$router.go(0))
+      .catch(err => console.log(err))
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.info-list {
+  display: flex;
+  margin: 0;
+
+  dt {
+    margin-right: 5px;
+  }
+}
 .cardDelete {
   border-color: #d73a49;
 }
