@@ -1,5 +1,13 @@
 linter:
   eslint:
-    npm_install: true
+    npm_install: true,
+    dir: 
+      - "src/"
+      - "test/"
     config: ".eslintrc.js"
     ext: "js,jsx"
+  hadolint:
+    trusted-registry:
+      - "oechsler.azurecr.io"
+  misspell:
+    locale: US
