@@ -14,6 +14,7 @@ module.exports = {
     ecmaVersion: 2020
   },
   rules: {
+    "prettier/prettier": "off",
     "quotes": ["warn", "double", {"avoidEscape": true}],
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "brace-style": ["warn", "allman", { "allowSingleLine": true }],
