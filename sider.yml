@@ -5,7 +5,7 @@ linter:
       - "src/"
       - "test/"
     config: ".eslintrc.js"
-    ext: "js,jsx"
+    ext: "js,ts,vue"
   hadolint:
     trusted-registry:
       - "oechsler.azurecr.io"
