@@ -18,6 +18,7 @@ module.exports = {
     "quotes": ["warn", "double", {"avoidEscape": true}],
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "brace-style": ["warn", "allman", { "allowSingleLine": true }],
+    "camelcase": ["warn", "always"],
     "semi": ["warn", "always"],
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     "@typescript-eslint/no-explicit-any": "off"
