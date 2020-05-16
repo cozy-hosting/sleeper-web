@@ -387,6 +387,13 @@ export default class Deployment extends Vue {
     this.deployState = DeployState.NOTHING;
     this.visible = false;
     this.parseForm();
+    let a = {
+      "b": 2
+    }
+    let c = 
+    {
+      "g" : 3
+    }
     if (!this.validate()) return;
 
     try {
