@@ -49,13 +49,15 @@ const routes: Array<RouteConfig> = [
   }
 ];
 
-const router = new VueRouter({
+const router = new VueRouter(
+{
   mode: "history",
   base: process.env.BASE_URL,
   routes
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) =>
+{
   const authService = new AuthenticationService();
   // redirect to login page if not logged in and trying to access a restricted page
   const publicPages = ["/login"];
@@ -66,11 +68,12 @@ router.beforeEach((to, from, next) => {
 
   // change layout if it's a public page
   if (!authRequired) 
-{
+  {
     store.commit("SET_LAYOUT", "public-page-layout");
   }
 
-  if (authRequired && !loggedIn) {
+  if (authRequired && !loggedIn)
+  {
     return next("/login");
   }
 
