@@ -14,7 +14,7 @@ module.exports = {
     ecmaVersion: 2020
   },
   rules: {
-    "quotes": "double",
+    "@typescript-eslint/quotes": "double",
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     "@typescript-eslint/no-explicit-any": "off"
