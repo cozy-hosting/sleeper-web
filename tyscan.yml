@@ -1,6 +1,6 @@
 rules:
   - id: foo                     # required, string
 
-    message: Do not use `side Literal`  # required, string
+    message: Do not use `foo`  # required, string
 
-    pattern: '`' # required, string or string list
+    pattern: 'foo' # required, string or string list
