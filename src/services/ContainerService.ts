@@ -1,15 +1,12 @@
 import ApiClient from './ApiClient';
+import { ContainerInterface } from "@/interfaces/ContainerInterface";
 
-export interface ContainerInterface {
-  deployment: string;
-}
-
-class ContainerService {
+export default class ContainerService {
   public getAll(skip: number, take: number) {
     return ApiClient.get(`container?skip=${skip}&take=${take}`);
   }
 
-  public getById(id: number) {
+  public getById(id: string) {
     return ApiClient.get(`container/${id}`);
   }
 
@@ -30,4 +27,3 @@ class ContainerService {
   }
 }
 
-export default new ContainerService();

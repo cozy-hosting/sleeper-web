@@ -1,21 +1,16 @@
 import ApiClient from './ApiClient';
+import { NetworkConnectInterface } from "@/interfaces/Network/NetworkConnectInterface";
+import { NetworkCreateInterface } from "@/interfaces/Network/NetworkCreateInterface";
 
-export interface NetworkCreateInterface {
-  name: string;
-  description: string;
-  subnet: string;
-}
 
-export interface NetworkConnectInterface {
-  container: string;
-}
 
-class NetworkService {
+
+export default class NetworkService {
   public getAll(skip: number, take: number) {
     return ApiClient.get(`network?skip=${skip}&take=${take}`);
   }
 
-  public getById(id: number) {
+  public getById(id: string) {
     return ApiClient.get(`network/${id}`);
   }
 
@@ -23,17 +18,16 @@ class NetworkService {
     return ApiClient.post('network', network);
   }
 
-  public connect(id: number, network: NetworkConnectInterface) {
+  public connect(id: string, network: NetworkConnectInterface) {
     return ApiClient.post(`network/${id}/connect`, network);
   }
 
-  public disconnect(id: number, network: NetworkConnectInterface) {
+  public disconnect(id: string, network: NetworkConnectInterface) {
     return ApiClient.post(`network/${id}/disconnect`, network);
   }
 
-  public delete(id: number) {
+  public delete(id: string) {
     return ApiClient.delete(`network/${id}`);
   }
 }
 
-export default new NetworkService();
