@@ -2,5 +2,5 @@ linter:
   eslint:
     root_dir: "src"
     npm_install: true
-    config: ".eslintrc"
+    config: "/.eslintrc"
     ext: "js,jsx"
