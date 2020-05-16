@@ -390,6 +390,7 @@ export default class Deployment extends Vue {
     if (!this.validate()) return;
 
     try {
+      console.log('OMEGA');
       this.deployState = DeployState.CREATE;
       const deploy = await this.deployService.create(this.form);
 
