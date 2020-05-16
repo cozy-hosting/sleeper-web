@@ -1,6 +1,5 @@
-import ApiClient from './ApiClient';
+import ApiClient from "./ApiClient";
 import { ImageInterface } from "@/interfaces/ImageInterface";
-
 
 export default class ImageService {
   public getAll(skip: number, take: number) {
@@ -13,8 +12,8 @@ export default class ImageService {
 
   public create(image: ImageInterface, username?: string, password?: string) {
     return username && password
-      ? ApiClient.post('image', image, { headers: { username, password } })
-      : ApiClient.post('image', image);
+      ? ApiClient.post("image", image, { headers: { username, password } })
+      : ApiClient.post("image", image);
   }
 
   public update(id: number) {
@@ -30,4 +29,3 @@ export default class ImageService {
     return ApiClient.post(url, { deployment: depID });
   }
 }
-

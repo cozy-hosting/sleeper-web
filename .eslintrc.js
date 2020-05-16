@@ -14,10 +14,10 @@ module.exports = {
     ecmaVersion: 2020
   },
   rules: {
-    "quotes": ["error", "double", {"avoidEscape": true}],
+    "quotes": ["warn", "double", {"avoidEscape": true}],
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "brace-style": ["error", "allman", { "allowSingleLine": true }],
-    "semi": ["error", "always"],
+    "brace-style": ["warn", "allman", { "allowSingleLine": true }],
+    "semi": ["warn", "always"],
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     "@typescript-eslint/no-explicit-any": "off"
   },

@@ -1,4 +1,4 @@
-import ApiClient from './ApiClient';
+import ApiClient from "./ApiClient";
 import { ContainerInterface } from "@/interfaces/ContainerInterface";
 
 export default class ContainerService {
@@ -11,7 +11,7 @@ export default class ContainerService {
   }
 
   public create(container: ContainerInterface) {
-    return ApiClient.post('container', container);
+    return ApiClient.post("container", container);
   }
 
   public start(id: number) {
@@ -26,4 +26,3 @@ export default class ContainerService {
     return ApiClient.delete(`container/${id}`);
   }
 }
-
