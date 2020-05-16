@@ -16,7 +16,7 @@ module.exports = {
   rules: {
     "quotes": ["error", "double", {"avoidEscape": true}],
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "brace-style": ["error", "allman", { "allowSingle": true}],
+    "brace-style": ["error", "allman", { "allowSingleLine": true}],
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     "@typescript-eslint/no-explicit-any": "off"
   },
