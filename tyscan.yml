@@ -1,5 +1,5 @@
 rules:
-   - id: foo                     # required, string
+  - id: foo                     # required, string
 
     message: Do not use `foo`  # required, string
 
