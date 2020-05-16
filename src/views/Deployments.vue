@@ -382,9 +382,9 @@ export default class Deployment extends Vue {
   onClose() {
     this.visible = false;
   }
-aFunc() {
+  bFunc() {
   return 0;
-}
+  }
 
   async onSubmit() {
     this.deployState = DeployState.NOTHING;
