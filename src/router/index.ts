@@ -55,7 +55,8 @@ const router = new VueRouter({
   routes
 });
 
-router.beforeEach((to, from, next) =>{
+router.beforeEach((to, from, next) =>
+{
   const authService = new AuthenticationService();
   // redirect to login page if not logged in and trying to access a restricted page
   const publicPages = ["/login"];
