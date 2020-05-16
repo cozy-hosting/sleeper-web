@@ -1,6 +1,6 @@
 linter:
   eslint:
-    npm_install: true,
+    npm_install: true
     dir: 
       - "src/"
       - "test/"
