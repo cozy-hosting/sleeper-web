@@ -1,3 +1,3 @@
 export interface ImageInterface {
-    deployment: string;
-  }
+  deployment: string;
+}

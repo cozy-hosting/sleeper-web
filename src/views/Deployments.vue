@@ -386,7 +386,9 @@ export default class Deployment extends Vue {
   async onSubmit() {
     this.deployState = DeployState.NOTHING;
     this.visible = false;
+
     this.parseForm();
+
     if (!this.validate()) return;
 
     try {

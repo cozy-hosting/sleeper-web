@@ -1,4 +1,4 @@
-import ApiClient from './ApiClient';
+import ApiClient from "./ApiClient";
 
 export interface TokenInterface {
   name: string;
@@ -7,7 +7,7 @@ export interface TokenInterface {
 
 class TokenService {
   public create(token: TokenInterface) {
-    return ApiClient.post('token', token);
+    return ApiClient.post("token", token);
   }
 }
 

@@ -1,3 +1,3 @@
 export interface ContainerInterface {
-    deployment: string;
-  }
+  deployment: string;
+}
