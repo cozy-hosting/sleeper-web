@@ -6,8 +6,8 @@ linter:
       - "tests/"
     config: ".eslintrc.js"
     ext: "js,ts,vue"
-  hadolint:
-    trusted-registry:
-      - "oechsler.azurecr.io"
+#  hadolint:
+#    trusted-registry:
+#      - "oechsler.azurecr.io"
   misspell:
     locale: US
