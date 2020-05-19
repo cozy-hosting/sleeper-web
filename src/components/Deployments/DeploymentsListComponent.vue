@@ -28,7 +28,6 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import Prop from "vue-property-decorator";
 
 const listProps = Vue.extend({
     props: {
@@ -45,7 +44,7 @@ const listProps = Vue.extend({
         type: Function
     }
     }
-})
+});
 
 @Component({
     name: "deployments-list-component"

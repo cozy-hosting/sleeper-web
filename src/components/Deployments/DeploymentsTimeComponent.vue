@@ -55,7 +55,6 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import Prop from "vue-property-decorator";
 
 const timeProps = Vue.extend({
   props: {
@@ -64,7 +63,7 @@ const timeProps = Vue.extend({
         type: Number
     }
   }
-})
+});
 
 @Component({
     name: "deployments-time-component"

@@ -14,7 +14,7 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import Prop from "vue-property-decorator";
+
 const delProps = Vue.extend({
   props: {
     deleteMode:
@@ -34,7 +34,7 @@ const delProps = Vue.extend({
       type: Function
     }
   }
-})
+});
 
 @Component({
     name: "deployments-deleteModal-component"

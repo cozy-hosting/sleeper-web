@@ -19,7 +19,6 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import Prop from "vue-property-decorator";
 
 const attachProps = Vue.extend({
     props: {
@@ -48,7 +47,7 @@ const attachProps = Vue.extend({
         type: Function
     }
     }
-})
+});
 
 
 @Component({"name": "networks-attachModal-component"})

@@ -28,7 +28,6 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import Prop from "vue-property-decorator";
 
 const elemProps = Vue.extend({
   props: {
@@ -53,7 +52,7 @@ const elemProps = Vue.extend({
         type: Function
     }
   }
-})
+});
 
 
 @Component({"name": "networks-element-component"})

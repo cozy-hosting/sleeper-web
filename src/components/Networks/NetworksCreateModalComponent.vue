@@ -25,10 +25,9 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import Prop from "vue-property-decorator";
 
 const createProps = Vue.extend({
-  props: {
+    props: {
     creationModalVisible:
     {
         type: Boolean
@@ -49,8 +48,8 @@ const createProps = Vue.extend({
     {
         type: Function
     }
-  }
-})
+    }
+});
 
 
 @Component({"name": "networks-createModal-component"})
