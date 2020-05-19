@@ -152,7 +152,7 @@ export default class Networks extends Vue
     try
     {
     await this.netService.create(this.creationForm);
-        const notOption: any= {message: "Nice!", description: "Your Network "+this.creationForm.name+" has been created!"};
+        //const notOption: any= {message: "Nice!", description: "Your Network "+this.creationForm.name+" has been created!"};
     this.creationPending = false;
         await this.getNets();
     //this.$notification.open(notOption); TODO:
@@ -200,8 +200,8 @@ export default class Networks extends Vue
     try
     {
     await this.netService.delete(id);
-    const notOption: any= {message: "Success!", description: "Your Network "+this.creationForm.name+" has been deleted!"};
-    //this.$notification.open(notOption); TODO:
+    // const notOption: any= {message: "Success!", description: "Your Network "+this.creationForm.name+" has been deleted!"};
+    // this.$notification.open(notOption); TODO:
     await this.getNets();
     }
     catch(e)
