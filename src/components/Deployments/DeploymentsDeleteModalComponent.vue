@@ -5,7 +5,7 @@
       @ok="handleDelete"
       @cancel="handelDelClose()"
     >
-      <a-checkbox v-model="deleteContainer"
+      <a-checkbox v-model="deleteContainer" @change="checkChanged(deleteContainer)"
         >Delete connected Container?</a-checkbox
       >
     </a-modal>
@@ -26,11 +26,11 @@ const delProps = Vue.extend({
     {
         type: Function
     },
-    deleteContainer:
-    {
-        type: Boolean
-    },
     handelDelClose:
+    {
+      type: Function
+    },
+    checkChanged:
     {
       type: Function
     }
@@ -42,6 +42,6 @@ const delProps = Vue.extend({
     })
 export default class DeploymentsDeleteModalComponent extends delProps
 {
-
+    deleteContainer = true;
 }
 </script>

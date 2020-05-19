@@ -24,7 +24,7 @@
     <deployments-editModal-component v-if="toEditJSON" v-bind:toEditJSON="toEditJSON" v-bind:editMode="editMode" v-bind:closeEdit="closeEdit" v-bind:handleOk="handleOk">
     </deployments-editModal-component>
 
-    <deployments-deleteModal-component v-bind:deleteMode="deleteMode" v-bind:handelDelClose="handelDelClose" v-bind:deleteContainer="deleteContainer" v-bind:handleDelete="handleDelete">
+    <deployments-deleteModal-component v-bind:deleteMode="deleteMode" v-bind:handelDelClose="handelDelClose" v-bind:checkChanged="checkChanged" v-bind:handleDelete="handleDelete">
     </deployments-deleteModal-component>
     
   </div>

@@ -212,6 +212,11 @@ export default class Deployment extends Vue {
   onCloseAlert() {
     this.alertMessage = [];
   }
+    
+    checkChanged(val: any)
+    {
+        this.deleteContainer = val;
+    }
 
   select(item: any) {
     this.form.image = item.name;
