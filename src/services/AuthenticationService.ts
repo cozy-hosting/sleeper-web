@@ -1,5 +1,4 @@
 import ApiClient from "./ApiClient";
-import {UserInterface} from "@/interfaces/UserInterface";
 import store from "@/store";
 
 export default class AuthenticationService

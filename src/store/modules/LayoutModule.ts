@@ -4,13 +4,13 @@ export const layoutModule = {
     },
     mutations: {
         SET_LAYOUT (state: { layout: string; }, payload: any) {
-            state.layout = payload
+            state.layout = payload;
         }
     },
     getters: {
         layout (state: { layout: string; }) {
-            return state.layout
+            return state.layout;
         }
     },
     actions: {},
-}
+};
