@@ -258,7 +258,7 @@ export default class Deployment extends Vue {
 
   async handleOk(toEdit: any) {
     const json: any = JSON.parse(toEdit);
-    const edit = await this.deployService.update(json.id, json);
+    await this.deployService.update(json.id, json);
     this.editMode = false;
     this.getAllDeployments(this.skip, this.take);
   }
