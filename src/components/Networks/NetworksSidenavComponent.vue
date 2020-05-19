@@ -38,9 +38,9 @@ const navbarProps = Vue.extend({
 })
 
 
-@Component({"name": "network-sidenav-component"})
+@Component({"name": "networks-sidenav-component"})
 
-export default class NetworkSideNavComponent extends navbarProps
+export default class NetworksSideNavComponent extends navbarProps
 {
 }
 </script>

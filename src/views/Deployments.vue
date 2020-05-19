@@ -377,6 +377,14 @@ export default class Deployment extends Vue {
     this.visible = true;
     this.currentImages = (await this.imageService.getAll(0, 20)).data.data;
     this.allImages = this.currentImages;
+
+    for(let i =0; i<this.allImages.length; i++)
+    {
+      if(this.allImages[i].name == undefined)
+      {
+        this.allImages.splice(i, 1);
+      }
+    }
   }
 
   onClose() {
@@ -484,11 +492,11 @@ export default class Deployment extends Vue {
         "You haven't provided an image for the deployment."
       );
     }
-    if (this.form.ports.length == 0) {
+  /*  if (this.form.ports.length == 0) {
       this.alertMessage.push(
         "You haven't provided any ports for the deployment."
       );
-    }
+    }*/
     if (this.alertMessage.length > 0) return false;
     else return true;
   }
