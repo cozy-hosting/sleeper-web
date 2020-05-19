@@ -1,5 +1,5 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import Vue from "vue";
+import Component from "vue-class-component";
 
 import NetworksSidenavComponent from "@/components/Networks/NetworksSidenavComponent.vue";
 import NetworksBreadcrumbComponent from "@/components/Networks/NetworksBreadcrumbComponent.vue";
@@ -14,7 +14,7 @@ import { NetworkCreateInterface } from "@/interfaces/Network/NetworkCreateInterf
 import { NetworkConnectInterface } from "@/interfaces/Network/NetworkConnectInterface";
 import { NetworkInterface } from "@/interfaces/Network/NetworkInterface";
 import { SubnetInterface } from "@/interfaces/Network/SubnetInterface";
-import DeploymentService from '@/services/DeploymentService';
+import DeploymentService from "@/services/DeploymentService";
 
 interface ContainerDisplayInterface
 {
