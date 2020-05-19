@@ -2,19 +2,21 @@ import ApiClient from "./ApiClient";
 import {UserInterface} from "@/interfaces/UserInterface";
 import store from "@/store";
 
-export default class AuthenticationService {
-    token: string | null | undefined;
+export default class AuthenticationService
+{
+  token: string | null | undefined;
 
-    getNewToken()
-    {
-        const url = "/Token";
-        return ApiClient.post(url);
-    }
+  getNewToken()
+  {
+    const url = "/Token";
+    return ApiClient.post(url);
+  }
 
-    setToken(token:string){
-        localStorage.setItem("authToken", token);
-        ApiClient.defaults.headers = {Authorization: "Bearer " + token};
-    }
+  setToken(token: string)
+  {
+    localStorage.setItem("authToken", token);
+    ApiClient.defaults.headers = { Authorization: "Bearer " + token };
+  }
 
     public isValidToken(){
         this.token = localStorage.getItem('authToken');
@@ -29,15 +31,20 @@ export default class AuthenticationService {
         return false;
     }
 
-    parseJwt(token: string): any {
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
+  parseJwt(token: string): any
+  {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map(function(c)
+        {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
 
-        return JSON.parse(jsonPayload);
-    }
-
-
+    return JSON.parse(jsonPayload);
+  }
 }
