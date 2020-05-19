@@ -1,4 +1,6 @@
 import ApiClient from "./ApiClient";
+import {UserInterface} from "@/interfaces/UserInterface";
+import store from "@/store";
 
 export default class AuthenticationService {
     token: string | null | undefined;
@@ -18,7 +20,11 @@ export default class AuthenticationService {
         this.token = localStorage.getItem('authToken');
         if(this.token != null){
             const parsedToken = this.parseJwt(this.token);
-            return parsedToken.exp*1000 > Date.now();
+            if(parsedToken.exp*1000 > Date.now()){
+                store.commit('SET_USER', parsedToken);
+                console.log(store.getters.user);
+                return true;
+            }
         }
         return false;
     }
