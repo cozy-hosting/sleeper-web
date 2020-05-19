@@ -1,6 +1,6 @@
 export const layoutModule = {
     state: {
-        layout: 'application-layout'
+        layout: "application-layout"
     },
     mutations: {
         SET_LAYOUT (state: { layout: string; }, payload: any) {

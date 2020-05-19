@@ -19,11 +19,11 @@ export default class AuthenticationService
   }
 
     public isValidToken(){
-        this.token = localStorage.getItem('authToken');
+        this.token = localStorage.getItem("authToken");
         if(this.token != null){
             const parsedToken = this.parseJwt(this.token);
             if(parsedToken.exp*1000 > Date.now()){
-                store.commit('SET_USER', parsedToken);
+                store.commit("SET_USER", parsedToken);
                 console.log(store.getters.user);
                 return true;
             }
