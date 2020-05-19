@@ -18,77 +18,86 @@ import DeploymentService from '@/services/DeploymentService';
 
 interface ContainerDisplayInterface
 {
-  name: string;
-  id: string;
+    name: string;
+    id: string;
 }
 
 @Component({components: 
 {
-  NetworksSidenavComponent, NetworksBreadcrumbComponent, NetworksAlertComponent, NetworksElementComponent,
-  NetworksCreateModalComponent, NetworksAttachModalComponent
+    NetworksSidenavComponent, NetworksBreadcrumbComponent, NetworksAlertComponent, NetworksElementComponent,
+    NetworksCreateModalComponent, NetworksAttachModalComponent
 }})
 export default class Networks extends Vue 
 {
-  netService: NetworkService = new NetworkService();
-  containerService: ContainerService = new ContainerService();
-  deployService: DeploymentService = new DeploymentService();
+    netService: NetworkService = new NetworkService();
+    containerService: ContainerService = new ContainerService();
+    deployService: DeploymentService = new DeploymentService();
 
-  creationModalVisible = false;
-  connectNetworkModal = false;
-  creationPending = false;
+    creationModalVisible = false;
+    connectNetworkModal = false;
+    creationPending = false;
 
-  alertMessage: string[] = [];
-  subnetForm: SubnetInterface = {gate: "", range: ""};
-  creationForm: NetworkCreateInterface = { name: "", description: "", subnet: ""};
-  allNetworks: NetworkInterface[] = [];
+    alertMessage: string[] = [];
+    subnetForm: SubnetInterface = {gate: "", range: ""};
+    creationForm: NetworkCreateInterface = { name: "", description: "", subnet: ""};
+    allNetworks: NetworkInterface[] = [];
 
-  selectedNetwork: string | undefined;
-  allContainer: any | undefined;
-  selectedContainer: ContainerDisplayInterface  = {name: "", id:""};
-  allContainerDisplay: ContainerDisplayInterface[] = [];
+    selectedNetwork: string | undefined;
+    allContainer: any | undefined;
+    selectedContainer: ContainerDisplayInterface  = {name: "", id:""};
+    allContainerDisplay: ContainerDisplayInterface[] = [];
 
-  sideInfo: any | undefined = {};
+    sideInfo: any | undefined = {};
 
-  showCreateModal()
-  {
+    showCreateModal()
+    {
     this.alertMessage = [];
     if(!this.creationModalVisible)
-      this.creationModalVisible = true;
-  }
+        this.creationModalVisible = true;
+    }
 
-  filterOption(input: any, option: any) {
-      return (
+    filterOption(input: any, option: any) {
+        return (
         option.componentOptions.children[0].text.toUpperCase().indexOf(input.toUpperCase()) >= 0
-      );
+        );
     }
 
-      onCloseAlert() {
-    this.alertMessage = [];
+    closeConnect()
+    {
+        this.connectNetworkModal = false;
     }
 
-  async handleAttach()
-  {
+    closeCreate()
+    {
+        this.creationModalVisible = false;
+    }
 
+    onCloseAlert() {
+        this.alertMessage = [];
+    }
+
+    async handleAttach()
+    {
     try
     {
     this.selectedContainer = this.allContainerDisplay.find((x: any) => x.name == this.selectedContainer.name) as any;
     }
     catch(e)
     {
-         this.connectNetworkModal = false;
-    this.selectedContainer = {name: "", id:""};
-    this.selectedNetwork = undefined;
-      this.alertMessage.push("Search for an existing container.");
-      return;
+        this.connectNetworkModal = false;
+        this.selectedContainer = {name: "", id:""};
+        this.selectedNetwork = undefined;
+        this.alertMessage.push("Search for an existing container.");
+        return;
     }
 
     if(!this.allContainerDisplay.includes(this.selectedContainer as ContainerDisplayInterface) || this.selectedContainer == undefined)
     {
-      this.alertMessage.push("Search for an existing container.");
-         this.connectNetworkModal = false;
-    this.selectedContainer = {name: "", id:""};
-    this.selectedNetwork = undefined;
-      return;
+        this.alertMessage.push("Search for an existing container.");
+        this.connectNetworkModal = false;
+        this.selectedContainer = {name: "", id:""};
+        this.selectedNetwork = undefined;
+        return;
     }
 
     const container = this.allContainer.find((x: any)=>x.id==(this.selectedContainer as ContainerDisplayInterface).id);
@@ -101,44 +110,45 @@ export default class Networks extends Vue
     }
     catch(e)
     {
-      this.alertMessage.push(e);
+        this.alertMessage.push(e);
     }
 
     this.connectNetworkModal = false;
     this.selectedContainer = {name: "", id:""};
     this.selectedNetwork = undefined;
-  }
+    }
 
 
-  async getContainerInfo(id: string)
-  {
+    async getContainerInfo(id: string)
+    {
     const containerInfo = (await this.containerService.getById(id)).data.data;
     const deploymentInfo = (await this.deployService.getById(containerInfo.deployment)).data.data;
     this.sideInfo = {containerInfo, deploymentInfo};
     
-  }
-  async getNets()
-  {
+    }
+
+    async getNets()
+    {
     this.allNetworks = (await this.netService.getAll(0, 20)).data.data;
-  }
+    }
 
-  async mounted()
-  {
+    async mounted()
+    {
     await this.getNets();
-  }
+    }
 
-  async handleCreateNetwork()
-  {
+    async handleCreateNetwork()
+    {
     if(!this.validateForm())
-      return;
+        return;
     this.creationForm.subnet = this.subnetForm.gate+"/"+this.subnetForm.range;
     this.creationModalVisible = false;
     this.creationPending = true;
     await this.create();
-  }
+    }
 
-  async create()
-  {
+    async create()
+    {
     try
     {
     await this.netService.create(this.creationForm);
@@ -150,16 +160,17 @@ export default class Networks extends Vue
     }
     catch(e)
     {
-      this.alertMessage.push(e);
+        this.alertMessage.push(e);
+        this.creationPending = false;
     }
 
-  }
+    }
 
-  validateForm()
-  {
+    validateForm()
+    {
     if(this.subnetForm.gate == "")
     {
-      this.alertMessage.push("You haven't enterred a gateway.");
+        this.alertMessage.push("You haven't enterred a gateway.");
     }
     if(this.subnetForm.range == "")
     {
@@ -168,24 +179,24 @@ export default class Networks extends Vue
 
     if(this.creationForm.name == "")
     {
-      this.alertMessage.push("Give the network a name.");
+        this.alertMessage.push("Give the network a name.");
     }
     if(this.creationForm.description == "")
     {
-      this.alertMessage.push("Describe your network.");
+        this.alertMessage.push("Describe your network.");
     }
 
     if(this.alertMessage.length > 0)
     {
-      return false;
+        return false;
     }
     return true;
-  }
+    }
 
 
 
-  async delNet(id: string)
-  {
+    async delNet(id: string)
+    {
     try
     {
     await this.netService.delete(id);
@@ -195,44 +206,44 @@ export default class Networks extends Vue
     }
     catch(e)
     {
-      this.alertMessage.push(e);
+        this.alertMessage.push(e);
     }
 
-  }
+    }
 
-  async getContainer()
-  {
+    async getContainer()
+    {
     this.allContainer = (await this.containerService.getAll(0, 100)).data.data;
     this.allContainerDisplay = [];
     for(let i =0; i<this.allContainer.length; i++)
     {
-      const deplName = (await this.deployService.getById(this.allContainer[i].deployment)).data.data.name;
-      this.allContainerDisplay[i] = { id: this.allContainer[i].id, name: deplName};
+        const deplName = (await this.deployService.getById(this.allContainer[i].deployment)).data.data.name;
+        this.allContainerDisplay[i] = { id: this.allContainer[i].id, name: deplName};
     }
-  }
+    }
 
   //selContName = "";
 
-  async connectCont(id: string)
-  {
+    async connectCont(id: string)
+    {
     await this.getContainer();
     this.selectedNetwork = id;
     this.connectNetworkModal = true;
-  }
+    }
 
-  async dcContainer(containerId: string, networkId: string)
-  {
+    async dcContainer(containerId: string, networkId: string)
+    {
     this.creationPending = true;
     try
     {
     await this.netService.disconnect(networkId, { container: containerId});
     await this.getNets();
-          this.creationPending = false;
+            this.creationPending = false;
     }
     catch(e)
     {
-      this.alertMessage.push(e);
-      this.creationPending = false;
+        this.alertMessage.push(e);
+        this.creationPending = false;
     }
-  }
+    }
 }

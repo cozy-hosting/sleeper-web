@@ -20,11 +20,11 @@
     </a-row>
 
     <networks-createModal-component v-bind:creationModalVisible="creationModalVisible" v-bind:handleCreateNetwork="handleCreateNetwork"
-                                    v-bind:creationForm="creationForm" v-bind:subnetForm="subnetForm">     
+                                    v-bind:creationForm="creationForm" v-bind:subnetForm="subnetForm" v-bind:closeCreate="closeCreate">     
     </networks-createModal-component>
 
     <networks-attachModal-component v-bind:allContainerDisplay="allContainerDisplay" v-bind:filterOptions="filterOption" v-bind:selectedContainer="selectedContainer"
-                                    v-bind:handleAttach="handleAttach" v-bind:connectNetworkModal="connectNetworkModal">
+                                    v-bind:handleAttach="handleAttach" v-bind:connectNetworkModal="connectNetworkModal" v-bind:closeConnect="closeConnect">
     </networks-attachModal-component>
     
     </a-layout-content>

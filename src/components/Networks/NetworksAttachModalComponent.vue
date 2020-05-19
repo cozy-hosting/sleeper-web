@@ -1,5 +1,5 @@
 <template>
-    <a-modal v-model="connectNetworkModal" title="Attach Container to Network" @ok="handleAttach()">
+    <a-modal :visible="connectNetworkModal" title="Attach Container to Network" @ok="handleAttach()" @cancel="closeConnect()">
         <label>Select Container</label>
 <a-auto-complete style="width: 100%" v-if="connectNetworkModal"
             placeholder="Available Containers"
@@ -42,6 +42,10 @@ const attachProps = Vue.extend({
     allContainerDisplay:
     {
         type: Array
+    },
+    closeConnect:
+    {
+        type: Function
     }
     }
 })

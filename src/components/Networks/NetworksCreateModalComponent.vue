@@ -1,5 +1,5 @@
 <template>
-    <a-modal v-model="creationModalVisible" title="Network Creation" @ok="handleCreateNetwork()">
+    <a-modal :visible="creationModalVisible" title="Network Creation" @ok="handleCreateNetwork()" @cancel="closeCreate()">
         <label>Network Name</label>
         <a-input placeholder="Name of the Network" v-model="creationForm.name"/>
         <a-divider></a-divider>
@@ -44,6 +44,10 @@ const createProps = Vue.extend({
     subnetForm:
     {
         type: Object
+    },
+    closeCreate:
+    {
+        type: Function
     }
   }
 })
