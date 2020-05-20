@@ -19,18 +19,19 @@ export default class AuthenticationService
 
     public isValidToken(){
         this.token = localStorage.getItem("authToken");
-        if(this.token != null){
-            const parsedToken = this.parseJwt(this.token);
+        try {
+            const parsedToken = this.parseJwt(this.token || "");
             if(parsedToken.exp*1000 > Date.now()){
                 store.commit("SET_USER", parsedToken);
-                console.log(store.getters.user);
                 return true;
             }
+        }catch (e) {
+            return false;
         }
         return false;
     }
 
-  parseJwt(token: string): any
+    parseJwt(token: string ): any
   {
     const base64Url = token.split(".")[1];
     const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");

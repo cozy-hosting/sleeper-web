@@ -65,6 +65,9 @@ export default class Authentication extends Vue {
         this.$router.push("home");
       })
       .catch(error => {
+        if (error.response.status == 404) {
+          this.errorMessage = "The Backend is not reachable";
+        }
         if (error.response.status == 401) {
           this.errorMessage = "The token is not valid";
         }
