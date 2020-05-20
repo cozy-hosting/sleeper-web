@@ -1,27 +1,16 @@
 import Vue from "vue";
 import Vuex from "vuex";
-
+import {userModule} from "@/store/modules/UserModule";
+import {layoutModule} from "@/store/modules/LayoutModule";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state:
-  {
-    layout: "application-layout"
-  },
-  mutations:
-  {
-    SET_LAYOUT(state, payload)
-    {
-      state.layout = payload;
-    }
-  },
-  getters:
-  {
-    layout(state)
-    {
-      return state.layout;
-    }
-  },
+  state: {},
+  mutations: {},
+  getters: {},
   actions: {},
-  modules: {}
+  modules: {
+    layoutModule: layoutModule,
+    userModule: userModule
+  }
 });
