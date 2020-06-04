@@ -15,10 +15,21 @@
         <a-menu-item key="/containers">Containers</a-menu-item>
         <a-menu-item key="/images">Images</a-menu-item>
         <a-menu-item key="/networks">Networks</a-menu-item>
-        <a-menu-item key="/login" type="primary" id="logout-btn"
-          ><a-button type="primary" @click="logout"
-            >Logout</a-button
-          ></a-menu-item
+        <a-menu-item key="" type="primary" id="user-infos">
+          <a-popover v-model="visible" trigger="click">
+            <div id="user-popover-wrapper" slot="content">
+              <p><strong>ID:</strong> {{ currentUser.id }}</p>
+              <p><strong>Name:</strong> {{ currentUser.name }}</p>
+              <p><strong>E-Mail:</strong> {{ currentUser.email }}</p>
+              <a-button id="logout-btn" type="primary" @click="logout">
+                Logout
+              </a-button>
+            </div>
+            <a id="user-popover-link" type="primary">
+              <a-icon type="user" />
+            </a>
+          </a-popover>
+        </a-menu-item
         >
       </a-menu>
 
@@ -44,13 +55,15 @@ import Vue from "vue";
 @Component({})
 export default class App extends Vue {
   private currentPage: string[] = [];
-
+  visible = true;
+  currentUser = this.$store.getters.user;
   onMenuItemSelected(e: any) {
     this.$router.push(e.key);
   }
 
   logout() {
     localStorage.clear();
+    this.$router.push("/login");
   }
 
   get selectedKeys() {
@@ -67,7 +80,23 @@ export default class App extends Vue {
   float: left;
   line-height: 1.55;
 }
-#logout-btn {
+#user-infos {
   float: right;
+  margin-right: 50px;
+}
+#user-popover-wrapper {
+  p {
+    margin-bottom: 5px;
+  }
+  #logout-btn {
+    margin-top: 10px;
+    width: 100%;
+  }
+}
+#user-popover-link {
+  i {
+    margin: 0;
+    font-size: 20px;
+  }
 }
 </style>

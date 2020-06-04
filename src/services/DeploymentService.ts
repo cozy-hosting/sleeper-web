@@ -1,6 +1,5 @@
-import ApiClient from './ApiClient';
+import ApiClient from "./ApiClient";
 import { DeploymentInterface } from "@/interfaces/DeploymentInterface";
-
 
 export default class DeploymentService {
   public getAll(skip: number, take: number) {
@@ -12,7 +11,7 @@ export default class DeploymentService {
   }
 
   public create(deployment: DeploymentInterface) {
-    return ApiClient.post('deployment', deployment);
+    return ApiClient.post("deployment", deployment);
   }
 
   public update(id: number, deployment: DeploymentInterface) {

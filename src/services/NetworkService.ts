@@ -1,9 +1,6 @@
-import ApiClient from './ApiClient';
+import ApiClient from "./ApiClient";
 import { NetworkConnectInterface } from "@/interfaces/Network/NetworkConnectInterface";
 import { NetworkCreateInterface } from "@/interfaces/Network/NetworkCreateInterface";
-
-
-
 
 export default class NetworkService {
   public getAll(skip: number, take: number) {
@@ -15,7 +12,7 @@ export default class NetworkService {
   }
 
   public create(network: NetworkCreateInterface) {
-    return ApiClient.post('network', network);
+    return ApiClient.post("network", network);
   }
 
   public connect(id: string, network: NetworkConnectInterface) {
@@ -30,4 +27,3 @@ export default class NetworkService {
     return ApiClient.delete(`network/${id}`);
   }
 }
-

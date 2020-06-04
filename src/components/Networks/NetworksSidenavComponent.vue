@@ -24,23 +24,22 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Component from 'vue-class-component';
-import Prop from "vue-property-decorator";
+import Vue from "vue";
+import Component from "vue-class-component";
 
 const navbarProps = Vue.extend({
-  props: {
+    props: {
     info:
     {
         type: Object
     }
-  }
-})
+    }
+});
 
 
-@Component({"name": "network-sidenav-component"})
+@Component({"name": "networks-sidenav-component"})
 
-export default class NetworkSideNavComponent extends navbarProps
+export default class NetworksSideNavComponent extends navbarProps
 {
 }
 </script>

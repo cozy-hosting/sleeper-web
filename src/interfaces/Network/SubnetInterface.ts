@@ -1,4 +1,4 @@
 export interface SubnetInterface {
-    gate: string;
-    range: string;
-  }
+  gate: string;
+  range: string;
+}
