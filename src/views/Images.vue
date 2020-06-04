@@ -15,6 +15,7 @@
           v-for="image in images"
           :image="image"
           :key="image.id"
+          @delete="onDelete"
         ></image-card>
       </section>
     </a-layout-content>
@@ -22,9 +23,11 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-import ImageService, { Image } from '@/services/ImageService';
-import ImageCard from '@/components/ImageCard.vue';
+import { Vue, Component } from "vue-property-decorator";
+import { Image } from "@/interfaces/Image/ImageInterface";
+import ImageService from "@/services/ImageService";
+import ImageCard from "@/components/Image/ImageCard.vue";
+const imageService = new ImageService();
 
 @Component({
   components: {
@@ -34,10 +37,15 @@ import ImageCard from '@/components/ImageCard.vue';
 export default class Images extends Vue {
   images: Image[] = [];
 
-  created() {
-    // prettier-ignore
-    ImageService.getAll(0, 20)
-      .then(res => this.images = res.data.data);
+  async created() {
+    const { data } = await imageService.getAll(0, 20);
+    this.images = data.data;
+  }
+
+  // Fetch images again after successful delete
+  async onDelete() {
+    const { data } = await imageService.getAll(0, 20);
+    this.images = data.data;
   }
 }
 </script>
@@ -45,7 +53,7 @@ export default class Images extends Vue {
 <style lang="scss" scoped>
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(540px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
   gap: 2em;
 }
 </style>

@@ -1,12 +1,20 @@
 import ApiClient from "./ApiClient";
-import { ImageInterface } from "@/interfaces/ImageInterface";
+import {
+  ImageInterface,
+  ImageGetAllResponse,
+  ImageGetByIdResponse
+} from "@/interfaces/Image/ImageInterface";
+import { AxiosResponse } from "axios";
 
 export default class ImageService {
-  getAll(skip: number, take: number) {
+  getAll(
+    skip: number,
+    take: number
+  ): Promise<AxiosResponse<ImageGetAllResponse>> {
     return ApiClient.get(`image?skip=${skip}&take=${take}`);
   }
 
-  getById(id: string) {
+  getById(id: string): Promise<AxiosResponse<ImageGetByIdResponse>> {
     return ApiClient.get(`image/${id}`);
   }
 
