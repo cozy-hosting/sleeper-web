@@ -1,30 +1,38 @@
 import ApiClient from "./ApiClient";
-import { ImageInterface } from "@/interfaces/ImageInterface";
+import {
+  ImageInterface,
+  ImageGetAllResponse,
+  ImageGetByIdResponse
+} from "@/interfaces/Image/ImageInterface";
+import { AxiosResponse } from "axios";
 
 export default class ImageService {
-  public getAll(skip: number, take: number) {
+  getAll(
+    skip: number,
+    take: number
+  ): Promise<AxiosResponse<ImageGetAllResponse>> {
     return ApiClient.get(`image?skip=${skip}&take=${take}`);
   }
 
-  public getById(id: number) {
+  getById(id: string): Promise<AxiosResponse<ImageGetByIdResponse>> {
     return ApiClient.get(`image/${id}`);
   }
 
-  public create(image: ImageInterface, username?: string, password?: string) {
+  create(image: ImageInterface, username?: string, password?: string) {
     return username && password
       ? ApiClient.post("image", image, { headers: { username, password } })
       : ApiClient.post("image", image);
   }
 
-  public update(id: number) {
+  update(id: string) {
     return ApiClient.put(`image/${id}`);
   }
 
-  public delete(id: number) {
+  delete(id: string) {
     return ApiClient.delete(`image/${id}`);
   }
 
-  public pull(depID: string) {
+  pull(depID: string) {
     const url = "/Image";
     return ApiClient.post(url, { deployment: depID });
   }

@@ -9,6 +9,12 @@ Vue.config.productionTip = false;
 
 Vue.use(PortalVue);
 
+Vue.filter("capitalize", (value: string) => {
+  if (!value) return "";
+  value = value.toString();
+  return value.charAt(0).toUpperCase() + value.slice(1);
+});
+
 new Vue({
   router,
   store,
