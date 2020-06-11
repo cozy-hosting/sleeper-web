@@ -2,7 +2,7 @@
   <a-layout style="position: relative; height: 100%">
     <a-layout-header class="header">
       <router-link to="/">
-        <div class="logo">Cozy</div>
+        <div class="logo">cozy</div>
       </router-link>
       <a-menu
         theme="dark"
@@ -15,24 +15,25 @@
         <a-menu-item key="/containers">Containers</a-menu-item>
         <a-menu-item key="/images">Images</a-menu-item>
         <a-menu-item key="/networks">Networks</a-menu-item>
-        <a-menu-item key="" type="primary" id="user-infos">
-          <a-popover v-model="visible" trigger="click">
-            <div id="user-popover-wrapper" slot="content">
-              <p><strong>ID:</strong> {{ currentUser.id }}</p>
-              <p><strong>Name:</strong> {{ currentUser.name }}</p>
-              <p><strong>E-Mail:</strong> {{ currentUser.email }}</p>
-              <a-button id="logout-btn" type="primary" @click="logout">
-                Logout
-              </a-button>
-            </div>
-            <a id="user-popover-link" type="primary">
-              <a-icon type="user" />
-            </a>
-          </a-popover>
-        </a-menu-item
+        <a-menu-item key="/host">Host</a-menu-item>
+        <a-popover
+          v-model="accountPopupVisible"
+          trigger="click"
+          style="position: absolute; right: 20px"
         >
+          <div id="user-popover-wrapper" slot="content">
+            <p><strong>ID:</strong> {{ currentUser.id }}</p>
+            <p><strong>Name:</strong> {{ currentUser.name }}</p>
+            <p><strong>E-Mail:</strong> {{ currentUser.email }}</p>
+            <a-button id="logout-btn" type="primary" @click="logout">
+              Logout
+            </a-button>
+          </div>
+          <a id="user-popover-link" type="primary">
+            <a-icon type="user" />
+          </a>
+        </a-popover>
       </a-menu>
-
     </a-layout-header>
     <a-layout>
       <a-layout-sider width="200" style="background: #fff">
@@ -41,7 +42,7 @@
       <a-layout style="padding: 0 24px 24px">
         <router-view></router-view>
         <a-layout-footer style="text-align: center">
-          Cozy ©2020
+          cozy ©2020
         </a-layout-footer>
       </a-layout>
     </a-layout>
@@ -55,7 +56,7 @@ import Vue from "vue";
 @Component({})
 export default class App extends Vue {
   private currentPage: string[] = [];
-  visible = true;
+  accountPopupVisible = false;
   currentUser = this.$store.getters.user;
   onMenuItemSelected(e: any) {
     this.$router.push(e.key);
