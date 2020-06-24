@@ -1,7 +1,19 @@
 import axios from "axios";
 
+function getUrl()
+{
+  let depUrl = location.hostname;
+  console.log(depUrl);
+  if (depUrl.includes("web.cozy"))
+  {
+    depUrl=depUrl.replace("web", "sleeper");
+    return depUrl;
+  }
+  return "https://localhost:5001";
+}
+
 const apiClient = axios.create({
-  baseURL: process.env.VUE_APP_API_URL ? process.env.VUE_APP_API_URL : "https://localhost:5001",
+  baseURL: process.env.VUE_APP_API_URL ? process.env.VUE_APP_API_URL : getUrl(),
   headers: {
     Authorization: "Bearer " + localStorage.getItem("authToken")
   }
