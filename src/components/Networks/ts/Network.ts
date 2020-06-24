@@ -162,6 +162,7 @@ export default class Networks extends Vue
     {
         this.alertMessage.push(e);
         this.creationPending = false;
+        this.creationModalVisible = false;
     }
 
     }
