@@ -2,7 +2,7 @@ import axios from "axios";
 
 function getUrl()
 {
-  let depUrl = "web.cozy.fleexo.me";
+  let depUrl = location.hostname;
   console.log(depUrl);
   if (depUrl.includes("web.cozy"))
   {
