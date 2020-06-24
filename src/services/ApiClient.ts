@@ -7,7 +7,7 @@ function getUrl()
   if (depUrl.includes("web.cozy"))
   {
     depUrl=depUrl.replace("web", "sleeper");
-    return depUrl;
+    return "https://"+depUrl;
   }
   return "https://localhost:5001";
 }
