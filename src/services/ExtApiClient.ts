@@ -3,7 +3,7 @@ import axios from "axios";
 function getUrl()
 {
   let depUrl = location.hostname;
-  console.log(depUrl);
+  //console.log(depUrl);
   if (depUrl.includes("web.cozy"))
   {
     depUrl=depUrl.replace("web", "sleeper");

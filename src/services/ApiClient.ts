@@ -2,12 +2,12 @@ import axios from "axios";
 
 function getUrl()
 {
-  let depUrl = location.hostname;
+  let depUrl = "web.cozy.fleexo.me";
   console.log(depUrl);
   if (depUrl.includes("web.cozy"))
   {
     depUrl=depUrl.replace("web", "sleeper");
-    return depUrl;
+    return "https://"+depUrl;
   }
   return "https://localhost:5001";
 }
