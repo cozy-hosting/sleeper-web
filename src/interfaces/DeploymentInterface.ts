@@ -1,4 +1,9 @@
-export interface DeploymentInterface {
+export interface DeploymentGetAll {
+  data: Deployment[];
+  count: number;
+}
+
+export interface Deployment {
   name: string;
   description: string;
   image: string;

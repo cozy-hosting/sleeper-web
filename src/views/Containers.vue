@@ -7,20 +7,35 @@
       </a-breadcrumb-item>
       <a-breadcrumb-item>Containers</a-breadcrumb-item>
     </a-breadcrumb>
-    <a-layout-content
-      :style="{ background: '#fff', padding: '24px', margin: 0 }"
-    >
-      <p>Containers</p>
-    </a-layout-content>
+    <section :style="{ background: '#fff', padding: '4em' }">
+      <a-page-header title="Containers">
+        <a-button slot="extra" @click="showCreate">Create new</a-button>
+      </a-page-header>
+    </section>
+    <router-view></router-view>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import Vue from "vue";
+import Component from "vue-class-component";
+import ContainerService from "@/services/ContainerService";
+import { Container } from "@/interfaces/ContainerInterface";
+const containerService = new ContainerService();
 
 @Component({})
-export default class Containers extends Vue {}
+export default class Containers extends Vue {
+  container: Container[] = [];
+
+  async created() {
+    const { data } = await containerService.getAll(0, 20);
+    this.container = data.data;
+  }
+
+  showCreate() {
+    this.$router.push({ name: "CreateContainer" });
+  }
+}
 </script>
 
 <style lang="scss"></style>

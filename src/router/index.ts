@@ -8,6 +8,7 @@ import Authentication from "@/views/Authentication.vue";
 import store from "@/store";
 import AuthenticationService from "@/services/AuthenticationService";
 import Networks from "@/views/Networks.vue";
+import CreateContainer from "@/components/Containers/CreateContainer.vue";
 
 Vue.use(VueRouter);
 
@@ -25,7 +26,14 @@ const routes: Array<RouteConfig> = [
   {
     path: "/containers",
     name: "Containers",
-    component: Containers
+    component: Containers,
+    children: [
+      {
+        path: "/create",
+        name: "CreateContainer",
+        component: CreateContainer
+      }
+    ]
   },
   {
     path: "/images",
@@ -55,8 +63,7 @@ const router = new VueRouter({
   routes
 });
 
-router.beforeEach((to, from, next) =>
-{
+router.beforeEach((to, from, next) => {
   const authService = new AuthenticationService();
   // redirect to login page if not logged in and trying to access a restricted page
   const publicPages = ["/login"];
@@ -66,13 +73,11 @@ router.beforeEach((to, from, next) =>
   store.commit("SET_LAYOUT", "application-layout");
 
   // change layout if it's a public page
-  if (!authRequired) 
-  {
+  if (!authRequired) {
     store.commit("SET_LAYOUT", "public-page-layout");
   }
 
-  if (authRequired && !loggedIn)
-  {
+  if (authRequired && !loggedIn) {
     return next("/login");
   }
 

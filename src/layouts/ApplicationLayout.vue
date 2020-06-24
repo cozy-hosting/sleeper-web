@@ -29,10 +29,8 @@
               <a-icon type="user" />
             </a>
           </a-popover>
-        </a-menu-item
-        >
+        </a-menu-item>
       </a-menu>
-
     </a-layout-header>
     <a-layout>
       <a-layout-sider width="200" style="background: #fff">
