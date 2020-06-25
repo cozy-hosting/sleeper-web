@@ -9,8 +9,8 @@
         @click="handleClick"
       >
         <a-menu-item key="home">Home</a-menu-item>
-        <a-menu-item key="deployment">Deployments</a-menu-item>
-        <a-menu-item key="image">Images</a-menu-item>
+        <a-menu-item key="/deployment">Deployments</a-menu-item>
+        <a-menu-item key="/image">Images</a-menu-item>
       </a-menu>
     </template>
     <template v-else>
@@ -28,8 +28,8 @@
           @click="handleClick"
         >
           <a-menu-item key="home">Home</a-menu-item>
-          <a-menu-item key="deployment">Deployments</a-menu-item>
-          <a-menu-item key="image">Images</a-menu-item>
+          <a-menu-item key="/deployment">Deployments</a-menu-item>
+          <a-menu-item key="/image">Images</a-menu-item>
         </a-menu>
       </transition>
     </template>
@@ -81,7 +81,7 @@ export default class TheNav extends Vue {
   }
 
   handleClick({ key }: MenuClick) {
-    this.$router.push({ name: key }).catch(() => {
+    this.$router.push(key).catch(() => {
       return; // Ignore
     });
   }

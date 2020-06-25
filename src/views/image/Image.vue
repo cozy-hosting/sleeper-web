@@ -4,11 +4,20 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
+import { imageModule } from "@/store";
 
 @Component
-export default class Deployment extends Vue {}
+export default class Deployment extends Vue {
+  get images() {
+    return imageModule.images;
+  }
+
+  created() {
+    imageModule.fetchImages();
+  }
+}
 </script>
 
 <style></style>

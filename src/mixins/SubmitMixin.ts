@@ -8,7 +8,7 @@ export class SubmitMixin extends Vue {
 
   mixinSubmit(
     form: FormModel,
-    cb: () => Promise<AxiosResponse<any>>,
+    cb: () => Promise<AxiosResponse<any>> | Promise<void>,
     successCb: () => void
   ) {
     form.validate(async valid => {
