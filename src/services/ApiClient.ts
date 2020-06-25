@@ -1,22 +1,8 @@
-import axios from "axios";
+import Axios from "axios";
 
-function getUrl()
-{
-  let depUrl = location.hostname;
-  console.log(depUrl);
-  if (depUrl.includes("web.cozy"))
-  {
-    depUrl=depUrl.replace("web", "sleeper");
-    return "https://"+depUrl;
-  }
-  return "https://localhost:5001";
-}
-
-const apiClient = axios.create({
-  baseURL: process.env.VUE_APP_API_URL ? process.env.VUE_APP_API_URL : getUrl(),
+export const apiClient = Axios.create({
+  baseURL: process.env.VUE_APP_API_URL,
   headers: {
     Authorization: "Bearer " + localStorage.getItem("authToken")
   }
 });
-
-export default apiClient;

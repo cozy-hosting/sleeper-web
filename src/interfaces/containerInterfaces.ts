@@ -11,6 +11,11 @@ export interface Container {
 
 export interface ContainerGetAll {
   data: Container[];
+  count: number;
+}
+
+export interface ContainerGetById {
+  data: Container;
 }
 
 export interface ContainerCreate {

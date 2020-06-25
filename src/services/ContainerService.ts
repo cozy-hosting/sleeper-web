@@ -1,35 +1,35 @@
-import ApiClient from "./ApiClient";
-import {
-  ContainerCreate,
-  ContainerGetAll
-} from "@/interfaces/ContainerInterface";
+import { apiClient } from "./apiClient";
 import { AxiosResponse } from "axios";
+import {
+  ContainerGetAll,
+  ContainerCreate,
+  ContainerGetById
+} from "@/interfaces/containerInterfaces";
 
-export default class ContainerService {
-  public getAll(
-    skip: number,
-    take: number
-  ): Promise<AxiosResponse<ContainerGetAll>> {
-    return ApiClient.get(`container?skip=${skip}&take=${take}`);
+class ContainerService {
+  getAll(skip: number, take: number): Promise<AxiosResponse<ContainerGetAll>> {
+    return apiClient.get(`container?skip=${skip}&take=${take}`);
   }
 
-  public getById(id: string) {
-    return ApiClient.get(`container/${id}`);
+  getById(id: string): Promise<AxiosResponse<ContainerGetById>> {
+    return apiClient.get(`container/${id}`);
   }
 
-  public create(container: ContainerCreate) {
-    return ApiClient.post("container", container);
+  create(container: ContainerCreate) {
+    return apiClient.post("container", container);
   }
 
-  public start(id: string) {
-    return ApiClient.post(`container/${id}/start`);
+  start(id: string) {
+    return apiClient.post(`container/${id}/start`);
   }
 
-  public stop(id: string) {
-    return ApiClient.post(`container/${id}/stop`);
+  stop(id: string) {
+    return apiClient.post(`container/${id}/stop`);
   }
 
-  public delete(id: string) {
-    return ApiClient.delete(`container/${id}`);
+  delete(id: string) {
+    return apiClient.delete(`container/${id}`);
   }
 }
+
+export default new ContainerService();

@@ -1,13 +1,14 @@
-import ApiClient from "./ApiClient";
-
-export interface TokenInterface {
-  name: string;
-  description: string;
-}
+import { apiClient } from "./apiClient";
+import { AxiosResponse } from "axios";
+import { TokenUpdate } from "@/interfaces/tokenInterfaces";
 
 class TokenService {
-  public create(token: TokenInterface) {
-    return ApiClient.post("token", token);
+  updateToken(): Promise<AxiosResponse<TokenUpdate>> {
+    return apiClient.post("token");
+  }
+
+  verifyToken() {
+    return apiClient.get("token");
   }
 }
 

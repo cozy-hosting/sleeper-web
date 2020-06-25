@@ -2,12 +2,9 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import "./plugins/ant-design-vue.js";
-import PortalVue from "portal-vue";
+import "./plugins/ant-design-vue.ts";
 
 Vue.config.productionTip = false;
-
-Vue.use(PortalVue);
 
 Vue.filter("capitalize", (value: string) => {
   if (!value) return "";

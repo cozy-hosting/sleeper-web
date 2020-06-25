@@ -1,29 +1,36 @@
-import ApiClient from "./ApiClient";
-import { NetworkConnectInterface } from "@/interfaces/Network/NetworkConnectInterface";
-import { NetworkCreateInterface } from "@/interfaces/Network/NetworkCreateInterface";
+import { apiClient } from "./apiClient";
+import { AxiosResponse } from "axios";
+import {
+  NetworkGetAll,
+  NetWorkGetById,
+  NetWorkCreate,
+  NetworkConnection
+} from "@/interfaces/networkInterfaces";
 
-export default class NetworkService {
-  public getAll(skip: number, take: number) {
-    return ApiClient.get(`network?skip=${skip}&take=${take}`);
+class NetworkService {
+  getAll(skip: number, take: number): Promise<AxiosResponse<NetworkGetAll>> {
+    return apiClient.get(`network?skip=${skip}&take=${take}`);
   }
 
-  public getById(id: string) {
-    return ApiClient.get(`network/${id}`);
+  getById(id: string): Promise<AxiosResponse<NetWorkGetById>> {
+    return apiClient.get(`network/${id}`);
   }
 
-  public create(network: NetworkCreateInterface) {
-    return ApiClient.post("network", network);
+  create(network: NetWorkCreate) {
+    return apiClient.post("network", network);
   }
 
-  public connect(id: string, network: NetworkConnectInterface) {
-    return ApiClient.post(`network/${id}/connect`, network);
+  connect(id: string, network: NetworkConnection) {
+    return apiClient.post(`network/${id}/connect`, network);
   }
 
-  public disconnect(id: string, network: NetworkConnectInterface) {
-    return ApiClient.post(`network/${id}/disconnect`, network);
+  disconnect(id: string, network: NetworkConnection) {
+    return apiClient.post(`network/${id}/disconnect`, network);
   }
 
-  public delete(id: string) {
-    return ApiClient.delete(`network/${id}`);
+  delete(id: string) {
+    return apiClient.delete(`network/${id}`);
   }
 }
+
+export default new NetworkService();

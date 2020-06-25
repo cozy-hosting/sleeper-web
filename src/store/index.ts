@@ -1,16 +1,15 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import {userModule} from "@/store/modules/UserModule";
-import {layoutModule} from "@/store/modules/LayoutModule";
+import { getModule } from "vuex-module-decorators";
+import _NavigationModule from "./modules/navigationModule";
+
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  getters: {},
-  actions: {},
+const store = new Vuex.Store({
   modules: {
-    layoutModule: layoutModule,
-    userModule: userModule
+    navigationModule: _NavigationModule
   }
 });
+
+export default store;
+export const navigationModule = getModule(_NavigationModule, store);
