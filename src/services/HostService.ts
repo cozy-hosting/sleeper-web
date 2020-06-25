@@ -1,7 +1,7 @@
 import ExtApiClient from "@/services/ExtApiClient";
 
 export default class HostService {
-    private client = ExtApiClient.create(process.env.VUE_APP_GLANCES_URL);
+    private client = ExtApiClient.create(process.env.VUE_APP_GLANCES_URL, true);
 
     public async getAllInfo(): Promise<object> {
         return (await this.client.get('all')).data;
