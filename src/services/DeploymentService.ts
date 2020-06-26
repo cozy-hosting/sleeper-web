@@ -3,7 +3,8 @@ import { AxiosResponse } from "axios";
 import {
   DeploymentGetAll,
   DeploymentGetById,
-  DeploymentCreate
+  DeploymentCreate,
+  CreateResponse
 } from "@/interfaces/deploymentInterfaces";
 
 class DeploymentService {
@@ -15,7 +16,9 @@ class DeploymentService {
     return apiClient.get(`deployment/${id}`);
   }
 
-  public create(deployment: DeploymentCreate) {
+  public create(
+    deployment: DeploymentCreate
+  ): Promise<AxiosResponse<CreateResponse>> {
     return apiClient.post("deployment", deployment);
   }
 

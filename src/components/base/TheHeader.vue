@@ -12,11 +12,11 @@
 
 <script>
 import { Vue } from "vue-property-decorator";
-import { navigationModule } from "@/store";
+import { NavigationModule } from "@/store";
 
 export default class TheHeader extends Vue {
   toggleHidden() {
-    navigationModule.TOGGLE_HIDDEN();
+    NavigationModule.TOGGLE_HIDDEN();
   }
 }
 </script>

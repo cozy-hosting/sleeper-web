@@ -5,6 +5,7 @@ import {
   DeploymentCreate
 } from "@/interfaces/deploymentInterfaces";
 import DeploymentService from "@/services/DeploymentService";
+import { ContainerModule } from "@/store";
 
 @Module({ namespaced: true, name: "deploymentModule" })
 class DeploymentModule extends VuexModule {
@@ -34,9 +35,13 @@ class DeploymentModule extends VuexModule {
       environment: {},
       labels: {}
     };
+    // Map environment and labels attributes to correct form
     deployment.environment.forEach(x => (parsed.environment[x.key] = x.value));
     deployment.labels.forEach(x => (parsed.labels[x.key] = x.value));
-    await DeploymentService.create(parsed);
+    // Create deployment
+    const { data } = await DeploymentService.create(parsed);
+    // Create container for deployment
+    await ContainerModule.createContainer({ deployment: data.data });
   }
 }
 

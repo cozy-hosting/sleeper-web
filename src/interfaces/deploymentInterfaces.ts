@@ -37,3 +37,7 @@ export interface DeploymentCreateForm {
   environment: { key: string; value: string }[];
   labels: { key: string; value: string }[];
 }
+
+export interface CreateResponse {
+  data: string;
+}

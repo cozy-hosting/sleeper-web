@@ -11,6 +11,7 @@
         <a-menu-item key="home">Home</a-menu-item>
         <a-menu-item key="/deployment">Deployments</a-menu-item>
         <a-menu-item key="/image">Images</a-menu-item>
+        <a-menu-item key="/container">Container</a-menu-item>
       </a-menu>
     </template>
     <template v-else>
@@ -30,6 +31,7 @@
           <a-menu-item key="home">Home</a-menu-item>
           <a-menu-item key="/deployment">Deployments</a-menu-item>
           <a-menu-item key="/image">Images</a-menu-item>
+          <a-menu-item key="/container">Container</a-menu-item>
         </a-menu>
       </transition>
     </template>
@@ -38,7 +40,7 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import { navigationModule } from "@/store";
+import { NavigationModule } from "@/store";
 
 interface MenuClick {
   item: object;
@@ -53,7 +55,7 @@ export default class TheNav extends Vue {
 
   // Computed
   get hidden() {
-    return navigationModule.hidden;
+    return NavigationModule.hidden;
   }
 
   get menuIndent() {
@@ -87,7 +89,7 @@ export default class TheNav extends Vue {
   }
 
   toggleHidden() {
-    navigationModule.TOGGLE_HIDDEN();
+    NavigationModule.TOGGLE_HIDDEN();
   }
 }
 </script>

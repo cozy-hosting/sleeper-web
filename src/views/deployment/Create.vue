@@ -263,7 +263,7 @@
 
 <script lang="ts">
 import { Component, Ref, Mixins } from "vue-property-decorator";
-import { imageModule, deploymentModule } from "@/store";
+import { ImageModule, DeploymentModule } from "@/store";
 import { FormModel } from "ant-design-vue";
 import { DeploymentCreateForm } from "@/interfaces/deploymentInterfaces";
 import { SubmitMixin } from "@/mixins/SubmitMixin";
@@ -285,11 +285,11 @@ export default class DeploymentCreateComp extends Mixins(SubmitMixin) {
   step = 0;
 
   get images() {
-    return imageModule.images;
+    return ImageModule.images;
   }
 
   created() {
-    imageModule.fetchImages();
+    ImageModule.fetchImages();
   }
 
   goBack() {
@@ -305,7 +305,7 @@ export default class DeploymentCreateComp extends Mixins(SubmitMixin) {
   onSubmit() {
     this.mixinSubmit(
       this.myForm,
-      () => deploymentModule.createDeployment(this.form),
+      () => DeploymentModule.createDeployment(this.form),
       this.goBack
     );
   }

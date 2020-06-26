@@ -18,7 +18,7 @@ class ImageModule extends VuexModule {
   }
 
   @Action
-  async pullImage(image: ImageCreate, username?: string, password?: string) {
+  async createImage(image: ImageCreate, username?: string, password?: string) {
     await ImageService.pull(image, username, password);
     this.fetchImages();
   }

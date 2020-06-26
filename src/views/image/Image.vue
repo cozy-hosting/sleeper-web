@@ -1,23 +1,44 @@
 <template>
   <div>
-    <a-page-header title="Images" style="padding: 0 0 20px 0"></a-page-header>
+    <a-page-header title="Images" style="padding: 0 0 20px 0">
+      <a-button @click="$router.push('/image/create')" slot="extra">
+        Create new
+      </a-button>
+    </a-page-header>
+    <section class="card-grid">
+      <image-card
+        v-for="image in images"
+        :image="image"
+        :key="image.id"
+      ></image-card>
+    </section>
+    <router-view></router-view>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import { imageModule } from "@/store";
+import { ImageModule } from "@/store";
+import ImageCard from "@/components/image/ImageCard.vue";
 
-@Component
+@Component({
+  components: { ImageCard }
+})
 export default class Deployment extends Vue {
   get images() {
-    return imageModule.images;
+    return ImageModule.images;
   }
 
   created() {
-    imageModule.fetchImages();
+    ImageModule.fetchImages();
   }
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2em;
+}
+</style>

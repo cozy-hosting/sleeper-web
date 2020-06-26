@@ -45,7 +45,7 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import { deploymentModule } from "@/store";
+import { DeploymentModule } from "@/store";
 import { Deployment } from "@/interfaces/deploymentInterfaces";
 
 const columns = [
@@ -79,11 +79,11 @@ export default class DeploymentMain extends Vue {
   isDelete = false;
 
   get deployments() {
-    return deploymentModule.deployments;
+    return DeploymentModule.deployments;
   }
 
   created() {
-    deploymentModule.fetchDeployments();
+    DeploymentModule.fetchDeployments();
   }
 
   showDelete(record: Deployment) {
@@ -97,7 +97,7 @@ export default class DeploymentMain extends Vue {
   }
 
   async handleDelete(record: Deployment) {
-    await deploymentModule.deleteDeployment(record.id);
+    await DeploymentModule.deleteDeployment(record.id);
     this.isDelete = false;
   }
 
