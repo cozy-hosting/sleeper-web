@@ -5,19 +5,26 @@ import { apiClient } from "@/services/ApiClient";
 
 @Module({ namespaced: true, name: "userModule" })
 class UserModule extends VuexModule {
-  user: User = { name: "", token: "" };
+  user: User = { name: "", token: "", rememberMe: false };
   loggedIn = false;
 
   @Mutation
   SET_USER(user: User) {
     this.user = user;
-    localStorage.setItem("user", JSON.stringify(user));
+    if (user.rememberMe) {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
     apiClient.defaults.headers.common["Authorization"] = `Bearer ${user.token}`;
   }
 
   @Mutation
   LOGIN() {
     this.loggedIn = true;
+  }
+
+  @Mutation
+  LOGOUT() {
+    this.loggedIn = false;
   }
 
   @Action
@@ -29,6 +36,12 @@ class UserModule extends VuexModule {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  @Action
+  logout() {
+    this.LOGOUT();
+    localStorage.removeItem("user");
   }
 }
 

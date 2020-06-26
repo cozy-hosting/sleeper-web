@@ -5,10 +5,11 @@
       Cozy
     </div>
     <div>
-      <router-link to="/login" v-if="!loggedIn">Login</router-link>
-      <template v-else>
+      <template v-if="loggedIn">
+        <a @click="logout">Logout</a>
         <a-icon type="user" class="user-icon" />{{ user.name }}
       </template>
+      <router-link to="/login" v-else>Login</router-link>
     </div>
   </header>
 </template>
@@ -25,6 +26,10 @@ export default class TheHeader extends Vue {
 
   get user() {
     return UserModule.user;
+  }
+
+  logout() {
+    UserModule.logout();
   }
 
   toggleHidden() {
@@ -44,7 +49,7 @@ header {
 }
 
 .user-icon {
-  margin-right: 5px;
+  margin: 0 5px 0 15px;
 }
 
 #logo {

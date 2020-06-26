@@ -30,6 +30,11 @@
       >
         <a-input-password v-model="form.token" />
       </a-form-model-item>
+      <a-form-model-item>
+        <a-checkbox v-model="form.rememberMe">
+          Remember me
+        </a-checkbox>
+      </a-form-model-item>
     </a-form-model>
   </a-modal>
 </template>
@@ -48,7 +53,8 @@ export default class Login extends Mixins(SubmitMixin) {
 
   form: User = {
     name: "",
-    token: ""
+    token: "",
+    rememberMe: false
   };
 
   onSubmit() {

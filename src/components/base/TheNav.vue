@@ -57,7 +57,7 @@ interface MenuClick {
 @Component({})
 export default class TheNav extends Vue {
   window = { width: window.innerWidth };
-  selectedKeys: string[] = ["home"];
+  selectedKeys: string[] = ["/"];
 
   // Computed
   get hidden() {
