@@ -4,7 +4,7 @@ import {
   DeploymentCreateForm,
   DeploymentCreate
 } from "@/interfaces/deploymentInterfaces";
-import DeploymentService from "@/services/deploymentService";
+import DeploymentService from "@/services/DeploymentService";
 
 @Module({ namespaced: true, name: "deploymentModule" })
 class DeploymentModule extends VuexModule {

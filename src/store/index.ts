@@ -1,9 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { getModule } from "vuex-module-decorators";
-import _navigationModule from "./modules/navigationModule";
-import _imageModule from "./modules/imageModule";
-import _deploymentModule from "./modules/deploymentModule";
+import _navigationModule from "./modules/NavigationModule";
+import _imageModule from "./modules/ImageModule";
+import _deploymentModule from "./modules/DeploymentModule";
 
 Vue.use(Vuex);
 

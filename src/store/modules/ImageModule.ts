@@ -1,6 +1,6 @@
 import { VuexModule, Module, Mutation, Action } from "vuex-module-decorators";
 import { Image, ImageCreate } from "@/interfaces/imageInterfaces";
-import ImageService from "@/services/imageService";
+import ImageService from "@/services/ImageService";
 
 @Module({ namespaced: true, name: "imageModule" })
 class ImageModule extends VuexModule {
