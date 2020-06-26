@@ -78,7 +78,7 @@ import { ContainerModule } from "@/store";
 @Component({
   filters: {
     joinComma: (x: string[]) => x.join(", "),
-    joinPort: (x: string) => x.replace(":", " --> ")
+    joinPort: (x: string) => x.replace(/:/g, " --> ")
   }
 })
 export default class ContainerCard extends Vue {
