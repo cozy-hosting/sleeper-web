@@ -89,7 +89,7 @@ export default class TheNav extends Vue {
   }
 
   toggleHidden() {
-    NavigationModule.TOGGLE_HIDDEN();
+    NavigationModule.toggleHidden();
   }
 }
 </script>

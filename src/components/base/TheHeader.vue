@@ -16,7 +16,7 @@ import { NavigationModule } from "@/store";
 
 export default class TheHeader extends Vue {
   toggleHidden() {
-    NavigationModule.TOGGLE_HIDDEN();
+    NavigationModule.toggleHidden();
   }
 }
 </script>

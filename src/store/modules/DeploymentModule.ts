@@ -43,6 +43,10 @@ class DeploymentModule extends VuexModule {
     // Create container for deployment
     await ContainerModule.createContainer({ deployment: data.data });
   }
+
+  get getDeploymentById() {
+    return (id: string) => DeploymentService.getById(id);
+  }
 }
 
 export default DeploymentModule;

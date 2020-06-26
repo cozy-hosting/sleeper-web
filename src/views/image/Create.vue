@@ -40,7 +40,7 @@ import { ImageModule } from "@/store";
 import { ImageCreate } from "@/interfaces/imageInterfaces";
 
 @Component
-export default class ContainerCreate extends Mixins(SubmitMixin) {
+export default class Create extends Mixins(SubmitMixin) {
   @Ref()
   readonly myForm!: FormModel;
   form: ImageCreate = { deployment: "" };

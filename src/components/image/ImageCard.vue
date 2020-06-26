@@ -31,6 +31,7 @@ import ImageService from "@/services/ImageService";
 })
 export default class ImageCard extends Vue {
   @Prop({ required: true }) readonly image!: Image;
+
   isDelete = false;
 
   async handleDelete() {

@@ -24,13 +24,9 @@ import ImageCard from "@/components/image/ImageCard.vue";
 @Component({
   components: { ImageCard }
 })
-export default class Deployment extends Vue {
+export default class ImageMain extends Vue {
   get images() {
     return ImageModule.images;
-  }
-
-  created() {
-    ImageModule.fetchImages();
   }
 }
 </script>
