@@ -17,9 +17,38 @@ class ContainerModule extends VuexModule {
     this.SET_CONTAINER(data.data);
   }
 
+  @Action
   async createContainer(deployment: ContainerCreate) {
     await ContainerService.create(deployment);
     this.fetchContainer();
+  }
+
+  @Action
+  async startContainer(id: string) {
+    await ContainerService.start(id);
+    this.fetchContainer();
+  }
+
+  @Action
+  async stopContainer(id: string) {
+    await ContainerService.stop(id);
+    this.fetchContainer();
+  }
+
+  @Action
+  async deleteContainer(id: string) {
+    await ContainerService.delete(id);
+    this.fetchContainer();
+  }
+
+  get sortedContainer() {
+    const state: Record<string, number> = {
+      running: 10,
+      created: 5,
+      exited: 0
+    };
+
+    return this.container.sort((a, b) => state[b.state] - state[a.state]);
   }
 }
 

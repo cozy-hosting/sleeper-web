@@ -26,7 +26,7 @@ import ContainerCard from "@/components/container/ContainerCard.vue";
 })
 export default class ContainerMain extends Vue {
   get container() {
-    return ContainerModule.container;
+    return ContainerModule.sortedContainer;
   }
 }
 </script>
@@ -34,7 +34,7 @@ export default class ContainerMain extends Vue {
 <style lang="scss" scoped>
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
   gap: 2em;
 }
 </style>
