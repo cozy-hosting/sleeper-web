@@ -5,17 +5,28 @@
       Cozy
     </div>
     <div>
-      <a-icon type="user" />
+      <router-link to="/login" v-if="!loggedIn">Login</router-link>
+      <template v-else>
+        <a-icon type="user" class="user-icon" />{{ user.name }}
+      </template>
     </div>
   </header>
 </template>
 
 <script>
 import { Vue, Component } from "vue-property-decorator";
-import { NavigationModule } from "@/store";
+import { NavigationModule, UserModule } from "@/store";
 
 @Component
 export default class TheHeader extends Vue {
+  get loggedIn() {
+    return UserModule.loggedIn;
+  }
+
+  get user() {
+    return UserModule.user;
+  }
+
   toggleHidden() {
     NavigationModule.toggleHidden();
   }
@@ -30,6 +41,10 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.user-icon {
+  margin-right: 5px;
 }
 
 #logo {

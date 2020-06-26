@@ -6,7 +6,6 @@ import { ImageModule } from "@/store";
 export const imageRoutes: RouteConfig[] = [
   {
     path: "/image",
-    name: "image",
     component: Image,
     beforeEnter: async (to, form, next) => {
       await ImageModule.fetchImages();
