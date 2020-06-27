@@ -35,7 +35,7 @@
     </a-tag>
     <a-descriptions layout="vertical" :column="1">
       <a-descriptions-item label="Deployment">
-        <a>{{ container.deployment }}</a>
+        <a @click="showDetails()">{{ container.deployment }}</a>
       </a-descriptions-item>
       <a-descriptions-item label="Ports" v-if="isEmpty(container.ports)">
         {{ container.ports | joinComma | joinPort }}
@@ -123,6 +123,10 @@ export default class ContainerCard extends Vue {
 
   isEmpty(x: Record<string, any> | any[]) {
     return Array.isArray(x) ? x.length : Object.keys(x).length;
+  }
+
+  showDetails() {
+    this.$router.push(`/deployment/detail/${this.container.deployment}`);
   }
 }
 </script>

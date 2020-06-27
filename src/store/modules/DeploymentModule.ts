@@ -45,7 +45,7 @@ class DeploymentModule extends VuexModule {
   }
 
   get getDeploymentById() {
-    return (id: string) => DeploymentService.getById(id);
+    return (id: string) => this.deployments.find(d => d.id === id);
   }
 }
 

@@ -1,8 +1,9 @@
+import "./plugins/ant-design-vue.ts";
+import "./plugins/class-component-hooks";
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store, { UserModule } from "./store";
-import "./plugins/ant-design-vue.ts";
 
 Vue.config.productionTip = false;
 

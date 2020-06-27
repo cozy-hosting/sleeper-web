@@ -104,6 +104,10 @@ export default class DeploymentMain extends Vue {
   showCreate() {
     this.$router.push("/deployment/create");
   }
+
+  showDetails(record: Deployment) {
+    this.$router.push(`/deployment/detail/${record.id}`);
+  }
 }
 </script>
 
