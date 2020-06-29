@@ -41,6 +41,6 @@ const delProps = Vue.extend({
     })
 export default class DeploymentsDeleteModalComponent extends delProps
 {
-    deleteContainer = true;
+    deleteContainer = false;
 }
 </script>
