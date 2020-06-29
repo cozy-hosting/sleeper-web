@@ -2,13 +2,13 @@ import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
 import Deployments from "@/views/Deployments.vue";
-import Containers from "@/views/Containers.vue";
+import Containers from "@/views/container/Containers.vue";
+import CreateContainer from "@/views/container/Create.vue";
 import Images from "@/views/Images.vue";
 import Authentication from "@/views/Authentication.vue";
 import store from "@/store";
 import AuthenticationService from "@/services/AuthenticationService";
 import Networks from "@/views/Networks.vue";
-import CreateContainer from "@/components/Containers/CreateContainer.vue";
 
 Vue.use(VueRouter);
 
@@ -24,12 +24,12 @@ const routes: Array<RouteConfig> = [
     component: Deployments
   },
   {
-    path: "/containers",
+    path: "/container",
     name: "Containers",
     component: Containers,
     children: [
       {
-        path: "/create",
+        path: "/container/create",
         name: "CreateContainer",
         component: CreateContainer
       }

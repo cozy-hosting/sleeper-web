@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    title="Create a new Container"
+    title="Create a new container"
     okText="Create"
     :visible="true"
     :confirmLoading="submitting"
@@ -33,21 +33,21 @@
 
 <script lang="ts">
 import { Component, Mixins, Ref } from "vue-property-decorator";
-import DeploymentService from "@/services/DeploymentService";
-import ContainerService from "@/services/ContainerService";
-import { Deployment } from "@/interfaces/DeploymentInterface";
 import { SubmitMixin } from "@/mixins/SubmitMixin";
 import { FormModel } from "ant-design-vue";
+import { containerModule } from "@/store";
+import { ContainerCreate } from "@/interfaces/containerInterfaces";
+import { Deployment } from "@/interfaces/DeploymentInterface";
+import DeploymentService from "@/services/DeploymentService";
 
 const deploymentService = new DeploymentService();
-const containerService = new ContainerService();
 
 @Component
-export default class ContainerCreate extends Mixins(SubmitMixin) {
+export default class Create extends Mixins(SubmitMixin) {
   @Ref()
   readonly myForm!: FormModel;
 
-  form = { deployment: "" };
+  form: ContainerCreate = { deployment: "" };
   deployments: Deployment[] = [];
 
   async created() {
@@ -58,15 +58,13 @@ export default class ContainerCreate extends Mixins(SubmitMixin) {
   onSubmit() {
     this.mixinSubmit(
       this.myForm,
-      () => containerService.create(this.form),
+      () => containerModule.createContainer(this.form),
       this.goBack
     );
   }
 
   goBack() {
-    this.$router.push({ name: "Containers" });
+    this.$router.push("/container");
   }
 }
 </script>
-
-<style></style>
