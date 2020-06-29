@@ -218,16 +218,32 @@ export default class Networks extends Vue
     this.allContainerDisplay = [];
     for(let i =0; i<this.allContainer.length; i++)
     {
-        const deplName = (await this.deployService.getById(this.allContainer[i].deployment)).data.data.name;
-        this.allContainerDisplay[i] = { id: this.allContainer[i].id, name: deplName};
+        try {
+            const deplName = (await this.deployService.getById(this.allContainer[i].deployment)).data.data.name;
+
+            this.allContainerDisplay[i] = { id: this.allContainer[i].id, name: deplName };
+        }
+        catch (e)
+        {
+            this.allContainer = [];
+            this.allContainerDisplay = [];
+            this.selectedNetwork = undefined;
+
+            this.alertMessage.push("You got an inconsistent Deployment.");
+            return false;
+        }
     }
+        return true;
     }
 
   //selContName = "";
 
     async connectCont(id: string)
     {
-    await this.getContainer();
+        if (!(await this.getContainer()))
+        {
+            return;
+        }
     this.selectedNetwork = id;
     this.connectNetworkModal = true;
     }
