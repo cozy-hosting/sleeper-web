@@ -2,7 +2,7 @@
   <a-layout style="position: relative; height: 100%">
     <a-layout-header class="header">
       <router-link to="/">
-        <div class="logo">Cozy</div>
+        <div class="logo">cozy</div>
       </router-link>
       <a-menu
         theme="dark"
@@ -39,7 +39,7 @@
       <a-layout style="padding: 0 24px 24px">
         <router-view></router-view>
         <a-layout-footer style="text-align: center">
-          Cozy ©2020
+          cozy ©2020
         </a-layout-footer>
       </a-layout>
     </a-layout>
@@ -53,7 +53,7 @@ import Vue from "vue";
 @Component({})
 export default class App extends Vue {
   private currentPage: string[] = [];
-  visible = true;
+  accountPopupVisible = false;
   currentUser = this.$store.getters.user;
   onMenuItemSelected(e: any) {
     this.$router.push(e.key);

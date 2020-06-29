@@ -9,6 +9,7 @@ import Authentication from "@/views/Authentication.vue";
 import store from "@/store";
 import AuthenticationService from "@/services/AuthenticationService";
 import Networks from "@/views/Networks.vue";
+import Host from "@/views/Host.vue";
 
 Vue.use(VueRouter);
 
@@ -51,9 +52,9 @@ const routes: Array<RouteConfig> = [
     component: Networks
   },
   {
-    path: "*",
-    name: "Home",
-    component: Home
+    path: "/host",
+    name: "Host",
+    component: Host
   }
 ];
 
