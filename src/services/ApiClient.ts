@@ -12,7 +12,7 @@ function getUrl()
 }
 
 const apiClient = axios.create({
-  baseURL: process.env.VUE_APP_API_URL ?? getUrl(),
+  baseURL: process.env.VUE_APP_SLEEPER_URL=="" ? getUrl():process.env.VUE_APP_SLEEPER_URL,
   headers: {
     Authorization: "Bearer " + localStorage.getItem("authToken")
   }

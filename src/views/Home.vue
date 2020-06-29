@@ -1,7 +1,7 @@
 <template>
   <div>
     <portal to="sidebar">
-      <p>Example Sidebar Content</p>
+      
     </portal>
     <a-breadcrumb style="margin: 16px 0">
       <a-breadcrumb-item>Home</a-breadcrumb-item>
