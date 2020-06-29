@@ -12,7 +12,7 @@
         :style="{ lineHeight: '64px' }"
       >
         <a-menu-item key="/deployments">Deployments</a-menu-item>
-        <a-menu-item key="/containers">Containers</a-menu-item>
+        <a-menu-item key="/container">Containers</a-menu-item>
         <a-menu-item key="/images">Images</a-menu-item>
         <a-menu-item key="/networks">Networks</a-menu-item>
         <a-menu-item key="/host">Host</a-menu-item>
