@@ -12,27 +12,24 @@
         :style="{ lineHeight: '64px' }"
       >
         <a-menu-item key="/deployments">Deployments</a-menu-item>
-        <a-menu-item key="/containers">Containers</a-menu-item>
+        <a-menu-item key="/container">Container</a-menu-item>
         <a-menu-item key="/images">Images</a-menu-item>
         <a-menu-item key="/networks">Networks</a-menu-item>
-        <a-menu-item key="/host">Host</a-menu-item>
-        <a-popover
-          v-model="accountPopupVisible"
-          trigger="click"
-          style="position: absolute; right: 20px"
-        >
-          <div id="user-popover-wrapper" slot="content">
-            <p><strong>ID:</strong> {{ currentUser.id }}</p>
-            <p><strong>Name:</strong> {{ currentUser.name }}</p>
-            <p><strong>E-Mail:</strong> {{ currentUser.email }}</p>
-            <a-button id="logout-btn" type="primary" @click="logout">
-              Logout
-            </a-button>
-          </div>
-          <a id="user-popover-link" type="primary">
-            <a-icon type="user" />
-          </a>
-        </a-popover>
+        <a-menu-item key="" type="primary" id="user-infos">
+          <a-popover v-model="visible" trigger="click">
+            <div id="user-popover-wrapper" slot="content">
+              <p><strong>ID:</strong> {{ currentUser.id }}</p>
+              <p><strong>Name:</strong> {{ currentUser.name }}</p>
+              <p><strong>E-Mail:</strong> {{ currentUser.email }}</p>
+              <a-button id="logout-btn" type="primary" @click="logout">
+                Logout
+              </a-button>
+            </div>
+            <a id="user-popover-link" type="primary">
+              <a-icon type="user" />
+            </a>
+          </a-popover>
+        </a-menu-item>
       </a-menu>
     </a-layout-header>
     <a-layout>

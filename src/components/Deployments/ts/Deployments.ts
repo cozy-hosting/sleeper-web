@@ -2,8 +2,8 @@ import { Component, Vue } from "vue-property-decorator";
 import DeploymentService from "@/services/DeploymentService";
 import ImageService from "@/services/ImageService";
 import ContainerService from "@/services/ContainerService";
-import {DeploymentInterface} from "@/interfaces/DeploymentInterface";
-import { ContainerInterface } from "@/interfaces/ContainerInterface";
+import { Deployment } from "@/interfaces/DeploymentInterface";
+import { ContainerCreate } from "@/interfaces/ContainerInterface";
 
 import DeploymentsBreadcrumbComponent from "@/components/Deployments/DeploymentsBreadcrumbComponent.vue";
 import DeploymentsAlertComponent from "@/components/Deployments/DeploymentsAlertComponent.vue";
@@ -22,12 +22,18 @@ enum DeployState {
   READY
 }
 
-@Component({components: 
-{
-    DeploymentsBreadcrumbComponent, DeploymentsAlertComponent, DeploymentsCreateComponent, 
-    DeploymentsTimeComponent, DeploymentsDeleteModalComponent, DeploymentsListComponent, DeploymentsEditModalComponent
-}})
-export default class Deployment extends Vue {
+@Component({
+  components: {
+    DeploymentsBreadcrumbComponent,
+    DeploymentsAlertComponent,
+    DeploymentsCreateComponent,
+    DeploymentsTimeComponent,
+    DeploymentsDeleteModalComponent,
+    DeploymentsListComponent,
+    DeploymentsEditModalComponent
+  }
+})
+export default class DeploymentComponent extends Vue {
   deployService: DeploymentService = new DeploymentService();
   imageService: ImageService = new ImageService();
   currentImages: any[] = [];
@@ -37,14 +43,14 @@ export default class Deployment extends Vue {
   editMode = false;
   deleteMode = false;
   deleteContainer = false;
-  form: DeploymentInterface = {
+  form: Deployment = {
     name: "",
     description: "",
     image: "",
     mounts: [""],
     ports: [""],
     environment: [{ k: "", val: "" }],
-    labels: [{ k: "", val: "" }],
+    labels: [{ k: "", val: "" }]
   };
   alertMessage: string[] = [];
   deployState: DeployState = DeployState.NOTHING;
@@ -59,8 +65,7 @@ export default class Deployment extends Vue {
     super();
   }
 
-  handelDelClose()
-  {
+  handelDelClose() {
     this.deleteMode = false;
   }
 
@@ -68,13 +73,11 @@ export default class Deployment extends Vue {
     await this.getAllDeployments(0, 20);
   }
 
-  closeEdit()
-  {
+  closeEdit() {
     this.editMode = false;
   }
 
   async getAllDeployments(skip: number, take: number) {
-
     this.allDeployments = (
       await this.deployService.getAll(skip, take)
     ).data.data;
@@ -86,10 +89,8 @@ export default class Deployment extends Vue {
     this.currentImages = (await this.imageService.getAll(0, 20)).data.data;
     this.allImages = this.currentImages;
 
-    for(let i =0; i<this.allImages.length; i++)
-    {
-      if(this.allImages[i].name == undefined)
-      {
+    for (let i = 0; i < this.allImages.length; i++) {
+      if (this.allImages[i].name == undefined) {
         this.allImages.splice(i, 1);
       }
     }
@@ -115,7 +116,7 @@ export default class Deployment extends Vue {
       await this.imageService.pull(deploy.data.data);
 
       this.deployState = DeployState.CCONTAINER;
-      const dep : ContainerInterface = {deployment: deploy.data.data};
+      const dep: ContainerCreate = { deployment: deploy.data.data };
       const cont = await this.containerService.create(dep);
 
       this.deployState = DeployState.RCONTAINER;
@@ -200,7 +201,7 @@ export default class Deployment extends Vue {
         "You haven't provided an image for the deployment."
       );
     }
-  /*  if (this.form.ports.length == 0) {
+    /*  if (this.form.ports.length == 0) {
       this.alertMessage.push(
         "You haven't provided any ports for the deployment."
       );
@@ -212,11 +213,10 @@ export default class Deployment extends Vue {
   onCloseAlert() {
     this.alertMessage = [];
   }
-    
-    checkChanged(val: any)
-    {
-        this.deleteContainer = val;
-    }
+
+  checkChanged(val: any) {
+    this.deleteContainer = val;
+  }
 
   select(item: any) {
     this.form.image = item.name;
