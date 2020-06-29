@@ -1,8 +1,12 @@
 import ApiClient from "./ApiClient";
-import { DeploymentInterface } from "@/interfaces/DeploymentInterface";
+import { Deployment, DeploymentGetAll } from "@/interfaces/DeploymentInterface";
+import { AxiosResponse } from "axios";
 
 export default class DeploymentService {
-  public getAll(skip: number, take: number) {
+  public getAll(
+    skip: number,
+    take: number
+  ): Promise<AxiosResponse<DeploymentGetAll>> {
     return ApiClient.get(`deployment?skip=${skip}&take=${take}`);
   }
 
@@ -10,11 +14,11 @@ export default class DeploymentService {
     return ApiClient.get(`deployment/${id}`);
   }
 
-  public create(deployment: DeploymentInterface) {
+  public create(deployment: Deployment) {
     return ApiClient.post("deployment", deployment);
   }
 
-  public update(id: number, deployment: DeploymentInterface) {
+  public update(id: number, deployment: Deployment) {
     return ApiClient.put(`deployment/${id}`, deployment);
   }
 

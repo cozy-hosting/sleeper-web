@@ -12,7 +12,7 @@
         :style="{ lineHeight: '64px' }"
       >
         <a-menu-item key="/deployments">Deployments</a-menu-item>
-        <a-menu-item key="/containers">Containers</a-menu-item>
+        <a-menu-item key="/container">Container</a-menu-item>
         <a-menu-item key="/images">Images</a-menu-item>
         <a-menu-item key="/networks">Networks</a-menu-item>
         <a-menu-item key="" type="primary" id="user-infos">
@@ -29,10 +29,8 @@
               <a-icon type="user" />
             </a>
           </a-popover>
-        </a-menu-item
-        >
+        </a-menu-item>
       </a-menu>
-
     </a-layout-header>
     <a-layout>
       <a-layout-sider width="200" style="background: #fff">

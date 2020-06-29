@@ -1,8 +1,15 @@
 import ApiClient from "./ApiClient";
-import { ContainerInterface } from "@/interfaces/ContainerInterface";
+import {
+  ContainerCreate,
+  ContainerGetAll
+} from "@/interfaces/ContainerInterface";
+import { AxiosResponse } from "axios";
 
 export default class ContainerService {
-  public getAll(skip: number, take: number) {
+  public getAll(
+    skip: number,
+    take: number
+  ): Promise<AxiosResponse<ContainerGetAll>> {
     return ApiClient.get(`container?skip=${skip}&take=${take}`);
   }
 
@@ -10,19 +17,19 @@ export default class ContainerService {
     return ApiClient.get(`container/${id}`);
   }
 
-  public create(container: ContainerInterface) {
+  public create(container: ContainerCreate) {
     return ApiClient.post("container", container);
   }
 
-  public start(id: number) {
+  public start(id: string) {
     return ApiClient.post(`container/${id}/start`);
   }
 
-  public stop(id: number) {
+  public stop(id: string) {
     return ApiClient.post(`container/${id}/stop`);
   }
 
-  public delete(id: number) {
+  public delete(id: string) {
     return ApiClient.delete(`container/${id}`);
   }
 }

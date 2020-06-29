@@ -4,7 +4,6 @@
       <router-link to="/">
         <div class="logo">Cozy</div>
       </router-link>
-
     </a-layout-header>
     <a-layout>
       <a-layout style="padding: 0 24px 24px">
