@@ -36,7 +36,6 @@ import { Component, Mixins, Ref } from "vue-property-decorator";
 import { SubmitMixin } from "@/mixins/SubmitMixin";
 import { FormModel } from "ant-design-vue";
 import { containerModule } from "@/store";
-import { ContainerCreate } from "@/interfaces/containerInterfaces";
 import { Deployment } from "@/interfaces/DeploymentInterface";
 import DeploymentService from "@/services/DeploymentService";
 
@@ -47,12 +46,15 @@ export default class Create extends Mixins(SubmitMixin) {
   @Ref()
   readonly myForm!: FormModel;
 
-  form: ContainerCreate = { deployment: "" };
+  form = { deployment: "" };
   deployments: Deployment[] = [];
 
   async created() {
     const { data } = await deploymentService.getAll(0, 20);
-    this.deployments = data.data;
+    const container = containerModule.container;
+    this.deployments = data.data.filter(
+      d => !container.find(c => c.deployment === d.id)
+    );
   }
 
   onSubmit() {
