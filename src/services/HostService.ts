@@ -1,7 +1,20 @@
 import ExtApiClient from "@/services/ExtApiClient";
 
 export default class HostService {
-    private client = ExtApiClient.create(process.env.VUE_APP_GLANCES_URL, true);
+
+    private static getGlancesUrl()
+    {
+        let depUrl = location.hostname;
+        console.log(depUrl);
+        if (depUrl.includes("web.cozy"))
+        {
+            depUrl=depUrl.replace("web", "glances");
+            return "https://"+depUrl;
+        }
+        return;
+    }
+
+    private client = ExtApiClient.create(process.env.VUE_APP_GLANCES_URL ?? HostService.getGlancesUrl(), true);
 
     public async getAllInfo(): Promise<object> {
         return (await this.client.get('all')).data;
