@@ -1,6 +1,15 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
+import Deployments from "@/views/Deployments.vue";
+import Containers from "@/views/container/Containers.vue";
+import CreateContainer from "@/views/container/Create.vue";
+import Images from "@/views/Images.vue";
+import Authentication from "@/views/Authentication.vue";
+import store from "@/store";
+import AuthenticationService from "@/services/AuthenticationService";
+import Networks from "@/views/Networks.vue";
+import Host from "@/views/Host.vue";
 
 Vue.use(VueRouter);
 
@@ -11,13 +20,41 @@ const routes: Array<RouteConfig> = [
     component: Home
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+    path: "/deployments",
+    name: "Deployments",
+    component: Deployments
+  },
+  {
+    path: "/container",
+    name: "Containers",
+    component: Containers,
+    children: [
+      {
+        path: "/container/create",
+        name: "CreateContainer",
+        component: CreateContainer
+      }
+    ]
+  },
+  {
+    path: "/images",
+    name: "Images",
+    component: Images
+  },
+  {
+    path: "/login",
+    name: "Authentication",
+    component: Authentication
+  },
+  {
+    path: "/networks",
+    name: "Networks",
+    component: Networks
+  },
+  {
+    path: "/host",
+    name: "Host",
+    component: Host
   }
 ];
 
@@ -25,6 +62,27 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  const authService = new AuthenticationService();
+  // redirect to login page if not logged in and trying to access a restricted page
+  const publicPages = ["/login"];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = authService.isValidToken();
+
+  store.commit("SET_LAYOUT", "application-layout");
+
+  // change layout if it's a public page
+  if (!authRequired) {
+    store.commit("SET_LAYOUT", "public-page-layout");
+  }
+
+  if (authRequired && !loggedIn) {
+    return next("/login");
+  }
+
+  next();
 });
 
 export default router;

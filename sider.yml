@@ -1,0 +1,13 @@
+linter:
+  eslint:
+    npm_install: true
+    dir: 
+      - "src/"
+      - "tests/"
+    config: ".eslintrc.js"
+    ext: "js,ts,vue"
+#  hadolint:
+#    trusted-registry:
+#      - "oechsler.azurecr.io"
+  misspell:
+    locale: US

@@ -1,36 +1,25 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png" />
-    <div>
-      <p>
-        If Ant-Design-Vue is successfully added to this project, you'll see an
-        <code v-text="'<a-button>'"></code>
-        below
-      </p>
-      <a-button type="primary">Primary</a-button>
-    </div>
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+  <a-layout style="position: relative; height: 100%">
+    <component v-bind:is="layout()"></component>
+  </a-layout>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Component from "vue-class-component";
+import Vue from "vue";
+import ApplicationLayout from "./layouts/ApplicationLayout";
+import PublicPageLayout from "./layouts/PublicPageLayout";
 
-export default {
-  name: "app",
-  components: {
-    HelloWorld
+@Component({})
+export default class App extends Vue {
+  constructor() {
+    super();
+    Vue.component("application-layout", ApplicationLayout);
+    Vue.component("public-page-layout", PublicPageLayout);
   }
-};
-</script>
 
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  layout() {
+    return this.$store.getters.layout;
+  }
 }
-</style>
+</script>
