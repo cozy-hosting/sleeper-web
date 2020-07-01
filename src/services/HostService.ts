@@ -9,7 +9,7 @@ export default class HostService {
         if (depUrl.includes("web.cozy"))
         {
             depUrl=depUrl.replace("web", "glances");
-            return "https://"+depUrl;
+            return "https://"+depUrl+"/api/3/";
         }
         return;
     }
