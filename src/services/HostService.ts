@@ -9,12 +9,12 @@ export default class HostService {
         if (depUrl.includes("web.cozy"))
         {
             depUrl=depUrl.replace("web", "glances");
-            return "https://"+depUrl;
+            return "https://"+depUrl+"/api/3/";
         }
         return;
     }
 
-    private client = ExtApiClient.create(process.env.VUE_APP_GLANCES_URL=="" ? HostService.getGlancesUrl() : process.env.VUE_APP_GLANCES_URL, true);
+    private client = ExtApiClient.create(process.env.VUE_APP_GLANCES_URL=="" ? HostService.getGlancesUrl() : process.env.VUE_APP_GLANCES_URL, false);
 
     public async getAllInfo(): Promise<object> {
         return (await this.client.get('all')).data;
