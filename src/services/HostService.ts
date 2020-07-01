@@ -14,7 +14,7 @@ export default class HostService {
         return;
     }
 
-    private client = ExtApiClient.create(process.env.VUE_APP_GLANCES_URL=="" ? HostService.getGlancesUrl() : process.env.VUE_APP_GLANCES_URL, true);
+    private client = ExtApiClient.create(process.env.VUE_APP_GLANCES_URL=="" ? HostService.getGlancesUrl() : process.env.VUE_APP_GLANCES_URL, false);
 
     public async getAllInfo(): Promise<object> {
         return (await this.client.get('all')).data;
